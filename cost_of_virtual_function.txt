@@ -1,0 +1,62 @@
+http://programmers.stackexchange.com/questions/191637/in-c-why-and-how-are-virtual-functions-slower
+
+@delnan:
+Virtual methods are commonly implemented via so-called virtual method tables (vtable for short), in which function pointers are stored. This adds indirection to the actual call (gotta fetch the address of the function to call from the vtable, then call it -- as opposed to just calling it right ahead). Of course, this takes some time and some more code.
+
+However, it is not necessarily the primary cause of slowness. The real problem is that the compiler (generally/usually) cannot know which function will be called. So it can't inline it or perform any other such optimizations. This alone might add a dozen pointless instructions (preparing registers, calling, then restoring state afterwards), and might inhibit other, seemingly unrelated optimizations. Moreover, if you branch like crazy by calling many different implementations, you suffer the same hits you'd suffer from branching like crazy via other means: The cache and branch predictor won't help you, the branches will take longer than a perfectly predictable branch.
+
+Big but: These performance hits are usually too tiny to matter. They're worth considering if you want to create a high-performance code and consider adding a virtual function that would be called at alarming frequency. However, also keep in mind that replacing virtual function calls with other means of branching (if .. else, switch, function pointers, etc.) won't solve the fundamental issue -- it may very well be slower. The problem (if it exists at all) isn't virtual functions but (unnecessary) indirection.
+
+Edit: The difference in the call instructions is described in other answers. Basically, the code for a static ("normal") call is:
+
+Copy some registers on the stack, to allow the called function to use those registers.
+Copy the arguments into predefined locations, so that the called function can find them regardless from where it is called.
+Push the return address.
+Branch/jump to the function's code, which is a compile-time address and hence hardcoded in the binary by the compiler/linker.
+Get the return value from a predefined location and restore registers we want to use.
+A virtual call does exactly the same thing, except that the function address is not known at compile time. Instead, a couple of instructions ...
+
+Get the vtable pointer, which points to an array of function pointers (function addresses), one for each virtual function, from the object.
+Get the right function address from the vtable into a register (the index where the correct function address is stored is decided at compile-time).
+Jump to the address in that register, rather than jumping to a hardcoded address.
+As for branches: A branch is anything which jumps to another instruction instead of just letting the next instruction execute. This includes if, switch, parts of various loops, function calls, etc. and sometimes the compiler implements things that don't seem to branch in a way that actually needs a branch under the hood. See Why is processing a sorted array faster than an unsorted array? for why this may be slow, what CPUs do to counter this slowdown, and how this isn't a cure-all.
+
+
+@Karl Bielefeldt
+Here's some actual disassembled code from a virtual function call and a non-virtual call, respectively:
+
+mov    -0x8(%rbp),%rax
+mov    (%rax),%rax
+mov    (%rax),%rax
+callq  *%rax
+
+callq  0x4007aa
+You can see that the virtual call requires three additional instructions to look up the correct address, whereas the address of the non-virtual call can be compiled in.
+
+However, note that most of the time that extra lookup time can be considered negligible. In situations where the lookup time would be significant, like in a loop, the value can usually be cached by doing the first three instructions before the loop.
+
+The other situation where the lookup time becomes significant is if you have a collection of objects and you're looping through calling a virtual function on each of them. However, in that case, you're going to need some means of selecting which function to call anyway, and a virtual table lookup is as good a means as any. In fact, since the vtable lookup code is so widely used it is heavily optimized, so trying to work around it manually has a good chance of resulting in worse performance.
+
+"three additional instructions" no, only two: loading the vptr and loading the function pointer -@ curiousguy
+
+
+@Kaz:
+Slower than what?
+Virtual functions solve a problem that cannot be solved by direct function calls. In general, you can only compare two programs which compute the same thing. "This ray tracer is faster than that compiler" doesn't make sense, and this principle generalizes even to small things like individual functions or programming language constructs.
+
+If you don't use a virtual function to dynamically switch to a piece of code based on a datum, such as an object's type, then you will have to use something else, like a switch statement to accomplish the same thing. That something else has its own overheads, plus implications on the organization of the program which influence its maintainability and global performance.
+
+Note that in C++, calls to virtual functions are not always dynamic. When calls are made on an object whose exact type is known (because the object isn't a pointer or reference, or because its type can otherwise be statically inferred) then the calls are just regular member function calls. That not only means that there isn't dispatch overhead, but also that these calls can be inlined in the same way as ordinary calls.
+
+In other words, your C++ compiler can work out when virtual functions do not require virtual dispatch, so there is usually no reason to worry about their performance relative to non-virtual functions.
+
+New: Also, we must not forget shared libraries. If you're using a class which is in a shared library, the call to an ordinary member function will not simply be a nice one instruction sequence like callq  0x4007aa. It has to go through a few hoops, like indirecting through a "program link table" or some such structure. Therefore, shared library indirection could somewhat (if not completely) level the cost difference between (truly indirect) virtual call and a direct call. So reasoning about virtual function tradeoffs must take into account how the program is built: whether the target object's class is monolithically linked into the program which is making the call.
+
+@ratchet freak
+because a virtual call is equivalent to
+res_t (*foo)(arg_t);
+foo = (obj->vtable[foo_offset]);
+foo(obj, args)
+where with a non-virtual function the compiler can constant-fold the first line, this is a dereference an addition and a dynamic call transformed into just a static call
+
+this also lets it inline the function (with all due optimization consequences)

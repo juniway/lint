@@ -1,0 +1,20 @@
+[LeetCode 263] Ugly Number
+Write a program to check whether a given number is an ugly number.
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.
+For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
+
+Note that 1 is typically treated as an ugly number.
+这题简单。既然已经说了ugly number是{2,3,5}的组合乘积构成的，
+那么判断逻辑也就简单了，对于任意一个给定的数字，拼命除这三个因子，
+最后能整除的就是ugly number，否则就不是。
+
+class Solution {
+  public:
+    bool isUgly(int num) {
+      if (num <= 0) return false;
+      while (num % 2 == 0) num /= 2;
+      while (num % 3 == 0) num /= 3;
+      while (num % 5 == 0) num /= 5;
+      return num == 1;
+    }
+};

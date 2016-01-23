@@ -1,0 +1,259 @@
+http://blog.csdn.net/jnu_simba/article/details/8830179
+
+#include<iostream>
+#include<stdlib.h>
+#include<time.h>
+using namespace std;
+
+typedef int ElemType;
+
+typedef struct  Node
+{
+    ElemType data;
+    struct Node *next;
+} Node;
+
+typedef Node *NodePtr;
+
+bool InitList(NodePtr *Npp)
+{
+    *Npp = (NodePtr)malloc(sizeof(Node));/* 产生头结点,并使*Npp指向此头结点 */
+    if (!(*Npp))
+        return false; //分配失败
+
+    (*Npp)->next = NULL;/* 指针域为空 */
+
+    return true;
+}
+
+bool ListEmpty(NodePtr Np)
+{
+    if (Np->next == NULL)
+        return true;
+    else
+        return false;
+}
+
+bool ClearList(NodePtr *Npp)
+{
+    cout << "Clear List..." << endl;
+    NodePtr p = *Npp;
+    if (!(p->next))
+        return true;
+    while (p->next)/*  没到表尾 */
+    {
+        NodePtr q = p->next;
+        p->next = q->next;
+        free(q);
+    }
+
+    return true;
+}
+
+int ListLength(NodePtr Np)
+{
+    cout << "List's length : ";
+    NodePtr p = Np->next;/* p指向第一个结点 */
+    int i = 0;
+
+    while (p)
+    {
+        p = p->next;
+        ++i;
+    }
+
+    return i;
+}
+/* 操作结果：用ptr返回Np中第pos个数据元素的值 */
+bool GetElem(NodePtr Np, int pos, ElemType *ptr)
+{
+    cout << "Get Item from pos " << pos << " : ";
+    NodePtr p = Np->next;
+    int i = 1;
+    /* p不为空或者计数器i还没有等于pos时，循环继续 */
+    while (p && i < pos)
+    {
+        p = p->next;
+        ++i;
+    }
+
+    if (!p)
+        return false;
+    *ptr = p->data;/*  取第pos个元素的数据 */
+    return true;
+}
+/* 返回Np中第1个与Elem满足关系的数据元素的位序。 */
+/* 若这样的数据元素不存在，则返回值为0 */
+int LocateElem(NodePtr Np, ElemType Elem)
+{
+    cout << "Item " << Elem << "'s pos : ";
+    NodePtr p = Np->next;
+    int i = 1;
+
+    while (p && p->data != Elem)
+    {
+        p = p->next;
+        ++i;
+    }
+
+    if (!p)
+        return 0;
+    return i;
+}
+/* 操作结果：在Np中第pos个位置之前插入新的数据元素Elem，Np的长度加1 */
+bool ListInsert(NodePtr *Npp, int pos, ElemType Elem)
+{
+    cout << "Insert List pos " << pos << " Item " << Elem << endl;
+    NodePtr p = *Npp;
+    int i = 1;
+
+    while (p && i < pos)
+    {
+        p = p->next;
+        ++i;
+    }
+
+    if (!p)
+        return false;
+
+    NodePtr In = (NodePtr)malloc(sizeof(Node));
+    In->data = Elem;
+    In->next = p->next;/* 将p的后继结点赋值给In的后继  */
+    p->next = In;  /* 将In赋值给p的后继 */
+
+    return true;
+}
+/* 删除Npp的第pos个数据元素，并用ptr返回其值，Npp的长度减1 */
+bool ListDelete(NodePtr *Npp, int pos, ElemType *ptr)
+{
+    cout << "Delete List Item in pos " << pos << endl;
+    NodePtr p = *Npp;
+    int i = 1;
+
+    while (p && i < pos)
+    {
+        p = p->next;
+        ++i;
+    }
+
+    if (!p)
+        return false;
+
+    NodePtr q = p->next;
+    *ptr = q->data;
+    p->next = q->next;/* 将q的后继赋值给p的后继 */
+    free(q);
+
+    return true;
+}
+
+bool ListTraverse(NodePtr Np)
+{
+    cout << "List's Items : ";
+    NodePtr p = Np->next;
+    while (p)
+    {
+        cout << p->data << ' ';
+        p = p->next;
+    }
+    cout << endl;
+    return true;
+}
+/*  随机产生n个元素的值，建立带表头结点的单链线性表Npp（头插法） */
+void CreateListHead(NodePtr *Npp, int num)
+{
+    cout << "Create List from Head ..." << endl;
+    if (*Npp != NULL)
+        free(*Npp);
+    *Npp = (NodePtr)malloc(sizeof(Node));
+    (*Npp)->next = NULL;/*  先建立一个带头结点的单链表 */
+    srand(time(NULL));
+
+    for (int i = 0; i < num; i++)
+    {
+        NodePtr p = (NodePtr)malloc(sizeof(Node));
+        p->data = rand() % 100 + 1; //随机数
+        p->next = (*Npp)->next;
+        (*Npp)->next = p;/*  插入到表头 */
+    }
+
+}
+/*  随机产生n个元素的值，建立带表头结点的单链线性表Npp（尾插法） */
+void CreateListTail(NodePtr *Npp, int num)
+{
+    cout << "Create List from Tail ..." << endl;
+    if (*Npp != NULL)
+        free(*Npp);
+    *Npp = (NodePtr)malloc(sizeof(Node));
+    (*Npp)->next = NULL;
+    srand(time(NULL));
+
+    NodePtr tail = *Npp; /* tail为指向尾部的结点 */
+    for (int i = 0; i < num; i++)
+    {
+        NodePtr p = (NodePtr)malloc(sizeof(Node));
+        p->data = rand() % 100 + 1;
+        tail->next = p;  /* 将表尾终端结点的指针指向新结点 */
+        tail = p; /* 将当前的新结点定义为表尾终端结点 */
+    }
+
+    tail->next = NULL;
+}
+/* 反转单链表*/
+NodePtr ReverseList(NodePtr head)
+{
+    cout << "Reverse List ...." << endl;
+    if(NULL == head->next || NULL == head->next->next)
+        return head;
+    NodePtr p;
+    NodePtr q;
+    NodePtr r;
+    p = head->next;
+    q = p->next;
+    head->next->next = NULL;
+    while(q)
+    {
+        r = q->next; //
+        q->next = p;
+        p = q; //
+        q = r; //
+    }
+    head->next = p;
+    return head;
+}
+
+int main(void)
+{
+    NodePtr Np; //头指针
+    InitList(&Np);
+    for (int i = 1; i < 5; i++)
+        ListInsert(&Np, i, i);
+
+    if (!ListEmpty(Np))
+        cout << ListLength(Np) << endl;
+    ListTraverse(Np);
+
+    cout << LocateElem(Np, 3) << endl;
+
+    int get;
+    GetElem(Np, 2, &get);
+    cout << get << endl;
+
+    ClearList(&Np);
+    cout << ListLength(Np) << endl;
+
+    CreateListHead(&Np, 10);
+    ListTraverse(Np);
+    int result;
+    ListDelete(&Np, 5, &result);
+    ListTraverse(Np);
+
+    ClearList(&Np);
+    CreateListTail(&Np, 10);
+    ListTraverse(Np);
+    ListTraverse(ReverseList(Np));
+
+    ClearList(&Np);
+
+    return 0;
+}
