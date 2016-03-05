@@ -589,7 +589,7 @@ string minWindow(string S, string T) {
         }
         if (minLen == numeric_limits<int>::max()) return "";
         return S.substr(minIdx, minLen);
-    }
+}
 
 class Solution_1 {
 public:
@@ -695,6 +695,139 @@ public:
     }
 };
 
+class Sol3sum {
+public:
+    vector<vector<int>> threeSum(vector<int> & nums){
+        int n = nums.size();
+        vector<vector<int>> triples;
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i < n - 2; ++i){
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            twoSum(nums, i + 1, 0 - nums[i], triples);
+        }
+        return triples;
+    }
+
+    // void twoSum(vector<int> &nums, int start, int target, vector<vector<int>> &res){
+    //     for(int i = start + 1; i < (int)nums.size(); ++i){
+    //         int val = target - nums[i];
+    //         if(hash.find(val) != hash.end()){
+    //             res.push_back({nums[start], nums[i], val});
+    //             continue;
+    //         }
+    //         hash[nums[i]] = i;
+    //     }
+
+    // }
+
+    void twoSum(vector<int> &nums, int start, int target, vector<vector<int>> &res){
+        int i = start, j = (int)nums.size() - 1;
+
+        while(i < j){
+            int sum = nums[i] + nums[j];
+            if(sum == target) {
+                res.push_back({nums[start - 1], nums[i], nums[j]});
+                ++i;
+                --j;
+                while(nums[i] == nums[i - 1]) ++i;
+                while(nums[j] == nums[j + 1]) --j;
+            }
+            else if(sum < target) ++i;
+            else --j;
+        }
+    }
+};
+
+class Sol4sum {
+public:
+    vector<vector<int>> fourSum(vector<int> &nums, int target) {
+        vector<vector<int>> tetrads;
+        if(nums.size() < 4) return tetrads;
+        sort(nums.begin(), nums.end());
+
+        for(int i = 0; i < (int)nums.size() - 3; ++i){
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            for(int j = i + 1; j < (int)nums.size() - 2; ++j){
+                if(j > 1 && i != j - 1 && nums[j] == nums[j - 1]) continue;
+                twoSum(nums, i, j + 1, target - nums[i] - nums[j], tetrads);
+            }
+        }
+
+        return tetrads;
+    }
+
+    void twoSum(vector<int> &nums, int start0, int start1, int target, vector<vector<int>> &tetrads){
+        int i = start1, j = (int)nums.size() - 1;
+        while(i < j){
+            int sum = nums[i] + nums[j];
+            if(sum == target){
+                tetrads.push_back({nums[start0], nums[start1 - 1], nums[i], nums[j]});
+                ++i; --j;
+                while(nums[i] == nums[i - 1]) ++i;
+                while(nums[j] == nums[j + 1]) --j;
+            }
+            else if(sum < target) ++i;
+            else --j;
+        }
+    }
+};
+
+class Sol4sumrec{
+public:
+    vector<vector<int>> fourSum(vector<int> &nums, int target){
+        vector<vector<int>> allSol;
+        vector<int> sol;
+        sort(nums.begin(), nums.end());
+        kSum(nums, 4, 0, nums.size() - 1, target, sol, allSol);
+
+        return allSol;
+    }
+
+    void kSum(vector<int> &nums, int k, int start, int end, int target, vector<int> &sol, vector<vector<int>> &allSol){
+        if(k <= 0) return;
+        if(k == 1) {
+            for(int i = start; i <= end; ++i){
+                sol.push_back(nums[i]);
+                allSol.push_back(sol);
+                sol.pop_back();
+                return;
+            }
+        }
+        if(k == 2){
+            twoSum(nums, start, end, target, sol, allSol);
+            return;
+        }
+        
+        for(int i = start; i <= end - k + 1; ++i){
+            if(i > start && nums[i] == nums[i - 1]) continue;
+            sol.push_back(nums[i]);
+            kSum(nums, i + 1, end, target - nums[i], k - 1, sol, allSol);
+            sol.pop_back();
+        }
+    }
+
+    void twoSum(vector<int> & nums, int start, int end, int target, vector<int> &sol, vector<vector<int>> &allSol){
+
+        while(start < end){
+            int sum = nums[start] + nums[end];
+            if(sum == target){
+                sol.push_back(nums[start]);
+                sol.push_back(nums[end]);
+                allSol.push_back(sol);
+                sol.pop_back();
+                sol.pop_back();
+                ++start; --end;
+                while(nums[start] == nums[start - 1]) ++start;
+                while(nums[end] == nums[end + 1]) --end;
+            }
+            else if(sum < target) ++start;
+            else --end;
+        }
+    }
+}
+
+// ==============================================================================================
+
 int main(){
 	// vector<int> vec = {1, 2, 3, 3, 5, 6, 6, 6};
 	// findDistinct(vec);
@@ -781,8 +914,23 @@ int main(){
 	// Solution2 s2;
 	// s2.solveNQueens(4);
 
-	vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-	Solution3 s3;
-	s3.groupAnagrams(strs);
+	// vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+	// Solution3 s3;
+	// s3.groupAnagrams(strs);
+
+    // vector<int> input = {-14,-10,-1,8,-8,-7,-3,-2,14,10,3,3,-1,-15,6,9,-1,6,-2,-6,-8,-15,8,-3,-14,5,-1,-12,-10,-5,-9,-8,1,-3,-15,0,-3,-11,6,-11,7,-6,7,-9,-6,-10,7,1,11,-10,10,-12,-10,3,-7,-9,-7,7,-14,-9,10,14,-2,-4,-4,-10,3,1,-14,-6,5,8,-4,-11,14,-3,-6,-2,13,13,3,0,-14,8,10,-14,6,11,1,7,-13,-4,6,0,-1,10,-3,-13,-4,-2,-11,8,-8};
+    // vector<int> input = {0, 0, 0};
+    // vector<int> input = {-2, 0, 1, 1, 2};
+    // vector<int> input = {1, 2, -2, -1};
+
+    vector<int> input = {0,-1,0,1,-2,-5,3,5,0};
+    
+    Sol4sum s4;
+    vector<vector<int>> result = s4.fourSum(input, 6);
+    for(auto row : result){
+        cout << endl;
+        for(auto i : row) cout << i << " ";
+    }
+    cout << "\nsize: " << result.size() << endl;
 
 }
