@@ -38,35 +38,58 @@ void bubbleSort(int* data, int N){
 
 Now the sort consists of a loop, and a recursive call to itself.
 This structure is simple to implement using some template classes:
+
 template<int N>
 class IntBubbleSort {
 public:
-    static inline void sort(int* data)
-    {
-        IntBubbleSortLoop<N-1,0>::loop(data);
-        IntBubbleSort<N-1>::sort(data);
+    static inline void sort(int A[]){
+        IntBubbleSortLoop<N-1,0>::loop(A);
+        IntBubbleSort<N-1>::sort(A);
+    }
+};
+
+template<int I, int J>
+class IntBubbleSortLoop{
+private:
+    enum(go = (J <= I - 2)};
+public:
+    static inline void loop(int A[]){
+        IntSwap<J, J+1>::compareAndSwap(A);
+        IntBubbleSortLoop<go ? I : 0, go ? (J + 1) : 0>::loop(A);
+    }
+};
+
+class IntBubbleSortLoop<0, 0> {
+public:
+    static inline void loop(int *) {}
+};
+
+template<int I, int J>
+class IntSwap{
+public:
+    static inline void compareAndSwap(int A[]){
+        if(A[I] > A[J]) swap(A[I], A[J]);
     }
 };
 
 // optimized bubble_sort
 // 如果数组已经排好序，那么bubble就可以提前结束
-void bubbleSort(int arr[], int n){
-	int i, j;
-	bool swapped;
-	for (i = 0; i < n-1; i++){
-		swapped = false;
-		for (j = 0; j < n-i-1; j++){
-			if (arr[j] > arr[j+1]){
-				swap(&arr[j], &arr[j+1]);
-				swapped = true;
-			}
-		}
-		// IF no two elements were swapped by inner loop, then break
-		if (swapped == false)
-			break;
+void bubble_sort(int A[], int n){
+    int i, j;
+    bool swapped;
+    for (i = 0; i < n - 1; i++){
+        swapped = false;
+        for (j = 0; j < n - i - 1; ++j){
+            if (arr[j] > A[j + 1]){
+                swap(&arr[j], &A[j + 1]);
+                swapped = true;
+            }
+        }
+        // If no two elements were swapped by inner loop, then break
+        if (swapped == false)
+            break;
    }
 }
-
 struct X { int x; typedef double Z; };
 struct Y { typedef int x; double Z; };
 template<typename T>

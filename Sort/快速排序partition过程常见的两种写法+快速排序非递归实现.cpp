@@ -19,8 +19,6 @@ int mypartition(vector<int>&arr, int low, int high){
 }
 
 
-
-
 第二种：
 
 int mypartition(vector<int>&arr, int low, int high){
@@ -34,8 +32,7 @@ int mypartition(vector<int>&arr, int low, int high){
 }
 
 
-当第二种方法也可以选择第一个元素作为枢纽(当我们对链表进行快排时选用这种做法)，对上面代码稍作改动即可，具体改动见注释                         本文地址
-
+当第二种方法也可以选择第一个元素作为枢纽(当我们对链表进行快排时选用这种做法)，对上面代码稍作改动即可，具体改动见注释
 int mypartition(vector<int>&arr, int low, int high)
  {
      int pivot = arr[low];//选第一个元素作为枢纽元

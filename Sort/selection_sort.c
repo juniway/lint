@@ -1,5 +1,4 @@
-void selectionSort(int a[], int n)
-{
+void selectionSort(int a[], int n) {
     int i, j;
     int min, temp;
 

@@ -49,7 +49,6 @@ public:
                         ht[s[k]] = 0; // reset flag for elments before s[k]
                     }
                 }
-
             }
             else{ // not a repeat
                 ht[s[i]]++;
@@ -133,6 +132,7 @@ public:
     }
 };
 
+// 20 ms
 class Solution{
 public:
     int lengthOfLongestSubstring(string s){
@@ -141,59 +141,44 @@ public:
 
         int maxlen = 0;
         int start = 0, i = 0;
-        for(; i < s.length(); ++i){
+        for(; i < (int)s.length(); ++i){
             if(hash[s[i]] != -1){ // repeat
                 if(maxlen < i - start) maxlen = i - start;
                 for(int k = start; k < hash[s[i]]; ++k){
-                    hash[s[k]] = -1; // reset
+                    hash[k] = -1; // reset
                 }
-                start = hash[s[i]] + 1;
+                if(start < hash[s[i]] + 1)
+                    start = hash[s[i]] + 1;
             }
-            else{
-                hash[s[i]] = i;
-            }
+            hash[s[i]] = i;
+
         }
+
+        maxlen = max((int)s.length() - start, maxlen);
 
         return maxlen;
     }
 };
 
+// 20 ms
 class Solution {
-14
 public:
-15
     int lengthOfLongestSubstring(string s) {
-16
         int hash[256];
-17
         for(int i=0; i<256; i++) hash[i] = -1;
-18
         int start = 0, ans = 0;
-19
         int i;
-20
         for(i=0; i<s.size(); i++){
-21
-            if( -1 != hash[ s[i] ] ){
-22
+            if( -1 != hash[s[i]] ){
                 if(ans < i-start) ans = i-start;
-23
-                for(int j=start; j<hash[ s[i] ]; j++) hash[j] = -1;
-24
-                if(hash[  s[i] ] + 1  > start )
-25
-                    start = hash[ s[i] ] +1;
-26
+                for(int j = start; j < hash[s[i]]; j++)
+                    hash[j] = -1;
+                if(hash[s[i]] + 1 > start )
+                    start = hash[s[i]] +1;
             }
-27
-            hash[ s[i]] = i;
-28
+            hash[s[i]] = i;
         }
-29
         if(ans < i-start) ans = i-start;
-30
         return ans;
-31
     }
-32
 };

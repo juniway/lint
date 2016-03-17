@@ -1,9 +1,7 @@
 /*
-[LeetCode 04]Median of two Sorted Arrays
-
-There are two sorted arrays A and B of size m and n respectively. 
+[LeetCode 04] Median of two Sorted Arrays
+There are two sorted arrays A and B of size m and n respectively.
 Find the median of the two sorted arrays.
-
 
 Example
 Given A=[1,2,3,4,5,6] and B=[2,3,4,5], the median is 3.5.
@@ -12,6 +10,8 @@ Given A=[1,2,3] and B=[4,5], the median is 3.
 
 Challenge
 The overall run time complexity should be O(log(m+n)).
+
+Difficulty: Hard
 
 */
 
@@ -68,7 +68,7 @@ double findMedianOfTwoSortedArrays(vector<int> A, vector<int> B){
 	}
 	else
 		return find_kth(A.begin(), A.end(), B.begin(), B.end(), total/2) + find_kth(A.begin(), A.end(), B.begin(), B.end(), total/2 + 1) / 2.0;
-	
+
 }
 
 typedef vector<int>::const_iterator Iter;
@@ -140,7 +140,7 @@ public:
             return 0.5*((double)median1 + (double)median2);
         }
     }
-    
+
     int findKthNum(int A[], int m, int B[], int n, int k) {
         if(m==0) return B[k-1];
         if(n==0) return A[k-1];
