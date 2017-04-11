@@ -7,8 +7,7 @@ void shownums(char *);
 void split(char *);
 void sort(char *);
 
-void main()
-{
+void main() {
     char str[67] ;
     clrscr();
     printf("Enter file name: ");
@@ -25,9 +24,8 @@ void main()
     getchar() ;
 }
 
-/* Displays the contents of file */
-void shownums(char *p)
-{
+// Displays the contents of file
+void shownums(char *p) {
     FILE *fp ;
     int i ;
 

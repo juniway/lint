@@ -1,11 +1,11 @@
-struct MaxHeap
-{
+struct MaxHeap {
     int size;
     int* array;
 };
 
-struct MaxHeap* createAndBuildHeap(int *array, int size)
-{
+// MaxHeap 实际上就是一个 Array，只不过，写成 struct 的话，通用性更高一些。
+
+struct MaxHeap* createAndBuildHeap(int *array, int size) {
     int i;
     struct MaxHeap* maxHeap = (struct MaxHeap*) malloc(sizeof(struct MaxHeap));
     maxHeap->size = size;   // initialize size of heap
@@ -98,15 +98,13 @@ void heapsort(int *a, int size){
 }
 
 // The main function to sort an array of given size
-void heapSort(int* array, int size)
-{
+void heapSort(int* array, int size) {
     // Build a heap from the input data.
     struct MaxHeap* maxHeap = createAndBuildHeap(array, size);
 
     // Repeat following steps while heap size is greater than 1.
     // The last element in max heap will be the minimum element
-    while (maxHeap->size > 1)
-    {
+    while (maxHeap->size > 1) {
         // The largest item in Heap is stored at the root. Replace
         // it with the last item of the heap followed by reducing the
         // size of heap by 1.
@@ -118,8 +116,7 @@ void heapSort(int* array, int size)
     }
 }
 
-int main()
-{
+int main() {
     int arr[] = {12, 11, 13, 5, 6, 7};
     int size = sizeof(arr)/sizeof(arr[0]);
 
@@ -134,8 +131,6 @@ int main()
 }
 
 void heap_sort(int a*, int n){
-
-
     createAndBuildHeap();
-    swap()
+    swap();
 }

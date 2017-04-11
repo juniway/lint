@@ -1,4 +1,3 @@
-
 // bubble_sort
 void bubble_sort(int a[], n){
 	for(int i = 0; i < n - 1; ++i){
@@ -12,7 +11,7 @@ void bubble_sort(int a[], n){
 	}
 }
 
-void bubbleSort(int* data, int N){
+void bubble_sort(int* data, int N){
     for (int i = N - 1; i > 0; --i){
         for (int j = 0; j < i; ++j){
             if (data[j] > data[j+1])
@@ -22,23 +21,22 @@ void bubbleSort(int* data, int N){
 }
 
 // http://www.cs.rpi.edu/~musser/design/blitz/meta-art.html
-In order to generate an inlined bubble sort such as the above,
-it seems that we'll have to unwind two loops.'
-We can reduce the number of loops to one,
-by using a recursive version of bubble sort:
+// In order to generate an inlined bubble sort such as the above,
+// it seems that we'll have to unwind two loops.'
+// We can reduce the number of loops to one, by using a recursive version of bubble sort:
 void bubbleSort(int* data, int N){
     for (int j = 0; j < N - 1; ++j){
         if (data[j] > data[j+1])
             swap(data[j], data[j+1]);
     }
 
-    if (N > 2)
+    if (N > 2) {
         bubbleSort(data, N-1);
+    }
 }
 
-Now the sort consists of a loop, and a recursive call to itself.
-This structure is simple to implement using some template classes:
-
+// Now the sort consists of a loop, and a recursive call to itself.
+// This structure is simple to implement using some template classes:
 template<int N>
 class IntBubbleSort {
 public:
@@ -51,7 +49,7 @@ public:
 template<int I, int J>
 class IntBubbleSortLoop{
 private:
-    enum(go = (J <= I - 2)};
+    enum(go = (J <= I - 2));
 public:
     static inline void loop(int A[]){
         IntSwap<J, J+1>::compareAndSwap(A);
@@ -73,7 +71,7 @@ public:
 };
 
 // optimized bubble_sort
-// 如果数组已经排好序，那么bubble就可以提前结束
+// 如果数组已经排好序，那么 bubble 就可以提前结束（外层 i 不必循环到 N 为止）
 void bubble_sort(int A[], int n){
     int i, j;
     bool swapped;
