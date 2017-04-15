@@ -1,6 +1,5 @@
-
-[LeetCode 01] Two Sum
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+#### [LeetCode 01] Two Sum
+>Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution.
 
 Example:
@@ -12,74 +11,50 @@ The return format had been changed to zero-based indices. Please read the above 
 http://www.lifeincode.net/programming/leetcode-two-sum-3-sum-3-sum-closest-and-4-sum-java/
 
 
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
 
-using namespace std;
+**Analysis**
+Condition:
+ 1. We should take no assumption that the input array is in order.
+ 2. The returned indexes should be in order.
+
+Idea:
+Loop the array and use a helper data struct (e.g. map) to record the visited elements (and its index in original array).
+When we are looping, we continuously query the map to find our target element.
 
 // Time:  O(n)
 // Space: O(n)
 
-// 1. unordered map, don't need sort
-//    <k, v> pair is <val, index>
+// 1. unordered map, sort isn't need
+
+```c++
+// <k, v> pair is <val, index>
 class Solution1{
 public:
     /*
-     * @param numbers : An array of Integer
-     * @param target : target = numbers[index1] + numbers[index2]
+     * target = numbers[index1] + numbers[index2]
      * @return : [index1+1, index2+1] (index1 < index2)
      */
     vector<int> twoSum(vector<int> &A, int target) {
-        int n = A.size();
-
         unordered_map<int, int> hash;
+        int n = A.size();
         for (int i = 0; i < n; ++i) {
-            // Check if "target - nums[i]" exists or not
             int val = target - A[i];
             if (hash.find(val) != hash.end()) { // found
                 return {hash[val] + 1, i + 1};
             }
-            hash[A[i]] = i;
+            hash[A[i]] = i; // not found, store the visited element
         }
 
         return {};
     }
 };
+```
 
-// 2. unordered map
-class Solution2{
-public:
-    /*
-     * @param numbers : An array of Integer
-     * @param target : target = numbers[index1] + numbers[index2]
-     * @return : [index1+1, index2+1] (index1 < index2)
-     */
-    vector<int> twoSum(vector<int> &A, int target) {
-        // write your code here
-        unordered_map<int, int> mapp;
-        vector<int> result;
-        for(int i = 0; i < (int)A.size(); ++i){
-            mapp[A[i]] = i;
-        }
+// 2. sort the array first
+// Use two indexers, i = 0, and j = n -1
 
-        for(int i = 0; i < (int)A.size(); ++i){
-            const int gap = target - A[i];
-            if(mapp.find(gap) != mapp.end() && mapp[gap] > i){
-                result.push_back(i + 1);
-                result.push_back(mapp[gap] + 1);
-                break;
-            }
-        }
-        return result;
-    }
-};
-
-// 3.
-// sort the array first
-// then use two indexer, i = 0, and j = n -1
-class Solution3 {
+```c++
+class Solution2 {
 public:
     vector<int> twoSum(vector<int>& A, int target) {
         int n = A.size();
@@ -112,15 +87,49 @@ public:
         return indices;
     }
 };
+```
+
+// 3. Golang solution
+
+```go
+func twoSum(nums []int, target int) []int {
+    visited := make(map[int]int) // <element, index>
+    res := make([]int, 2)
+    for i, v := range nums {
+        rem := target - v
+        if idx, ok := visited[rem]; ok {
+            res[0], res[1] = idx, i
+            if idx > i {
+                res[0], res[1] = i, idx
+            }
+            // sort.Ints(res)
+            return res
+        } else {
+            visited[v] = i
+        }
+    }
+    return res
+}
+```
+
+**Simple driver Program:**
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
 
 int main(){
-	vector<int> vec = {1, 2, 3, 3};
-	Solution2 s;
-	auto result = s.twoSum(vec, 6);
+    vector<int> vec = {1, 2, 3, 3};
+    Solution2 s;
+    auto result = s.twoSum(vec, 6);
 
-	for(auto& i: result){
-		cout << i << " ";
-	}
-	cout << endl;
-
+    for(auto& i: result){
+        cout << i << " ";
+    }
+    cout << endl;
 }
+```

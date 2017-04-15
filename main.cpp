@@ -797,7 +797,7 @@ public:
             twoSum(nums, start, end, target, sol, allSol);
             return;
         }
-        
+
         for(int i = start; i <= end - k + 1; ++i){
             if(i > start && nums[i] == nums[i - 1]) continue;
             sol.push_back(nums[i]);
@@ -824,7 +824,7 @@ public:
             else --end;
         }
     }
-}
+};
 
 // ==============================================================================================
 
@@ -924,7 +924,7 @@ int main(){
     // vector<int> input = {1, 2, -2, -1};
 
     vector<int> input = {0,-1,0,1,-2,-5,3,5,0};
-    
+
     Sol4sum s4;
     vector<vector<int>> result = s4.fourSum(input, 6);
     for(auto row : result){

@@ -1,8 +1,8 @@
 /*
  * Find height without recursion:
- * We can use level order traversal to find height without recursion. 
- * The idea is to traverse level by level. Whenever move down to a level, 
- * increment height by 1 (height is initialized as 0). Count number of 
+ * We can use level order traversal to find height without recursion.
+ * The idea is to traverse level by level. Whenever move down to a level,
+ * increment height by 1 (height is initialized as 0). Count number of
  * nodes at each level, stop traversing when count of nodes at next level
  * is 0.
  */
@@ -13,7 +13,7 @@
  * Push root into the queue.
  * height = 0
 
- * loop 
+ * loop
      	nodeCount = size of queue
 
  		// If number of nodes at this level is 0, return height
@@ -45,7 +45,7 @@ void insert(tree*& root, int num){
     tree* newNode = (tree*)malloc(sizeof(struct tree)); // tree* root = new root
 	newNode -> data = num;
 	newNode -> left = newNode ->right = nullptr;
-    
+
     tree *prev = root, *cur = root;
 
 	while(cur!=nullptr){
@@ -66,12 +66,13 @@ void insert(tree*& root, int num){
 }
 
 int getHeightOfTree_Recursive(tree* root){
-	if (!root) 
+	if (!root)
 		return 0;
 
 	int leftHeight = getHeightOfTree(root -> left);
 	int rightHeight = getHeightOfTree(root -> right);
 
+	// 由于根节点不为 NULL，所以高度至少是1
 	return 1 + std::max(leftHeight, rightHeight);
 }
 

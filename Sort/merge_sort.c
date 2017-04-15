@@ -18,6 +18,59 @@ Pros: Marginally faster than the heap sort for larger sets.
 Cons: At least twice the memory requirements of the other sorts; recursive.
 */
 
+如果对Merge的每个递归调用都声明一个临时数组，那么任一时刻可能会有logN个临时数组处于活动期,这对小内存机器是致命的。
+另一方面，如果Merge动态分配并释放最小量临时空间，那么由malloc占用的时间会很多。
+由于Merge位于MSort的最后一行，可以在MergeSort中建立该临时数组。
+因此在任一时刻只需要一个临时数组活动，而且可以使用该临时数组的任意部分；我们将使用和输入数组array相同的部分。
+这样的话，该算法的空间占用为N，N是待排序的数组元素个数。
+
+/*
+tmp_array[]：辅助数组。
+left_pos：数组左半部分的游标
+left_end：左边数组的右界限
+*/
+void Merge(int array[], int tmp_array[], int left_pos, int right_pos, int right_end) {
+    int i, left_end, num_elements, tmp_pos;
+    left_end = right_pos - 1;
+    tmp_pos = left_pos;
+    num_elements = right_end - left_pos + 1;
+
+    while (left_pos <= left_end && right_pos <= right_end)
+        if (array[left_pos] <= array[right_pos])
+            tmp_array[tmp_pos++] = array[left_pos++];
+        else
+            tmp_array[tmp_pos++] = array[right_pos++];
+    while (left_pos <= left_end)
+        tmp_array[tmp_pos++] = array[left_pos++];
+    while (right_pos <= right_end)
+        tmp_array[tmp_pos++] = array[right_pos++];
+    for (i = 0; i < num_elements; i++, right_end--)
+        array[right_end] = tmp_array[right_end];
+}
+
+void MSort(int array[], int tmp_array[], int left, int right) {
+    int center;
+    if (left < right) {
+        center = (left + right) / 2;
+        MSort(array, tmp_array, left, center);
+        MSort(array, tmp_array, center + 1, right);
+        Merge(array, tmp_array, left, center + 1, right);
+    }
+}
+
+void MergeSort(int array[], int n) {
+    int *tmp_array;
+        //上面文字部分给出了为什么在MergeSort中建立临时数组tmp_array
+        tmp_array = (int *)malloc(n * sizeof(int));
+    if (tmp_array != NULL) {
+        MSort(array, tmp_array, 0, n - 1);
+        free(tmp_array);
+    }
+    else
+        cout << "malloc failed" << endl;
+}
+
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -49,8 +102,8 @@ void mergeSort(int numbers[], int temp[], int array_size){
 void m_sort(int numbers[], int temp[], int left, int right){
     int mid;
 
-    if (right > left){
-        mid = (right + left) / 2;
+    if (left < right){
+        mid = (left + right) / 2;
         m_sort(numbers, temp, left, mid);
         m_sort(numbers, temp, mid+1, right);
         merge(numbers, temp, left, mid+1, right);
@@ -96,7 +149,7 @@ void merge(int numbers[], int temp[], int left, int mid, int right){
 
 
 
-/* C program for Merge Sort */
+// C program for Merge Sort
 #include<stdlib.h>
 #include<stdio.h>
 

@@ -16,7 +16,7 @@ void merge_sort(int* a, int low, int high){
 
 void merge(int* a, int low, int mid, int high){
     int h, i, j, k;
-    int b[50];      // = new int[high-low];
+    int *b = new int[high-low];
     h = low;
     i = low;
     j = mid + 1;
@@ -33,13 +33,13 @@ void merge(int* a, int low, int mid, int high){
         i++;
     }
 
-    if(h>mid){ // if h>mid, then it means all elements in left are set in final arr, we only need to put all elements in right to arr
+    if(h>mid){ // if h > mid, then it means all elements in left are set in final arr, we only need to put all elements in right to arr
         for(k = j; k <= high; k++){
             b[i] = a[k];
             ++i;
         }
     }
-    else{ // if h<=mid, then it means all elements in right are set in final arr, we only need to put all elements in left to arr
+    else{ // if h <= mid, then it means all elements in right are set in final arr, we only need to put all elements in left to arr
         for(k = h; k <= mid; k++){
             b[i] = a[k];
             ++i;
@@ -48,6 +48,8 @@ void merge(int* a, int low, int mid, int high){
 
     for(k = low; k <= high; k++) // copy all elements back to array a[]
         a[k] = b[k];
+
+    delete b;
 }
 
 int main(){
