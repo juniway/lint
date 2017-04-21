@@ -2,22 +2,22 @@
 // http://www.csegeek.com/csegeek/view/tutorials/algorithms/backtrack/backtrack_part3.php
 // Backtracking
 
-// Problem :- 
+// Problem :-
 // Solve the Knight's tour problem i.e find a Knight's tour on a 8 x 8 chessboard.
-// A Knight's tour is a sequence of moves of Knight on a chessboard such that the knight visits every square exactly once. 
+// A Knight's tour is a sequence of moves of Knight on a chessboard such that the knight visits every square exactly once.
 
-// Solution :- 
+// Solution :-
 // A Knight is placed on the first cell of an empty chessboard and can move according to the chess rules.
-// At any point on the chessboard, the knight have a maximum of 8 possible options to make a move. 
-// 1) Suppose, the knight is currently in cell ( x , y ) and it chooses one of the possible moves to a cell 
-//   (if the cell is not visited previously and the move is indeed a valid one ). 
-//   Then, we move the knight to that cell and check recursively whether we can find a solution from that cell. 
-//   If the solution exists, then that cell is marked as visited and then again 
+// At any point on the chessboard, the knight have a maximum of 8 possible options to make a move.
+// 1) Suppose, the knight is currently in cell ( x , y ) and it chooses one of the possible moves to a cell
+//   (if the cell is not visited previously and the move is indeed a valid one ).
+//   Then, we move the knight to that cell and check recursively whether we can find a solution from that cell.
+//   If the solution exists, then that cell is marked as visited and then again
 //   knight chooses one of the possible moves and follows same steps.
-// 2) If the solution doesn't exits, then the knight backtracks to the previous cell ( x , y ) and 
+// 2) If the solution doesn't exits, then the knight backtracks to the previous cell ( x , y ) and
 //    tries out other possible alternatives.
-//    When all the cells are visited, we have found a sequence of knight moves which visits every cell 
-//    on the chessboard exactly once. 
+//    When all the cells are visited, we have found a sequence of knight moves which visits every cell
+//    on the chessboard exactly once.
 
 #include <iostream>
 #include <chrono>
@@ -30,7 +30,7 @@ using namespace std;
 typedef struct chess_moves {
    // 'x' and 'y' coordinates on chess board
    int x, y;
-}chess_moves;
+} chess_moves;
 
 // displays the knight tour solution
 void printTour(int tour[N][N]) {
@@ -54,12 +54,11 @@ bool isMovePossible(chess_moves next_move, int tour[N][N]) {
 
 
 // recursive function to find a knight tour
-bool findTour(int tour[N][N], chess_moves move_KT[],
-               chess_moves curr_move, int move_count){
+bool findTour(int tour[N][N], chess_moves move_KT[], chess_moves curr_move, int move_count){
    int i;
    chess_moves next_move;
    if (move_count == N*N-1) {
-      // Knight tour is completed 
+      // Knight tour is completed
       // i.e all cells on the chess board has been visited by knight once
       return true;
    }
@@ -76,9 +75,8 @@ bool findTour(int tour[N][N], chess_moves move_KT[],
          tour[next_move.x][next_move.y] = move_count + 1;
          if (findTour(tour, move_KT, next_move, move_count + 1)) {
             return true;
-         }
-         else {
-            // this move was invalid, try out other possiblities 
+         } else {
+            // this move was invalid, try out other possiblities
             tour[next_move.x][next_move.y] = 0;
          }
       }
@@ -106,11 +104,10 @@ void knightTour() {
    chess_moves curr_move = {0, 0};
 
    // find a possible knight tour using a recursive function
-   // starting from current move 
+   // starting from current move
    if(findTour(tour, move_KT, curr_move, 0) == false) {
       cout<<"\nKnight tour does not exist";
-   }
-   else {
+   } else {
       cout<<"\nTour exist ...\n";
       printTour(tour);
    }

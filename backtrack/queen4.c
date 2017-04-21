@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 int count = 0;        // 解的个数
-int isCorrect(int i , int j, int (*Q)[4]) // is Q[i][j] correct
+int isCorrect(int i, int j, int (*Q)[4]) // is Q[i][j] correct
 {
 	int s, t;
 	for(s = i, t = 0; t < 4; ++t){ // row
