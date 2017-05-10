@@ -15,7 +15,7 @@
 int  n, r;
 char used[MaxN];
 int  p[MaxN];
- 
+
 void permute(int pos)
 { int i;
 /*如果已是第r个元素了，则可打印r个元素的排列 */
@@ -33,7 +33,7 @@ void permute(int pos)
             p[pos] = i;
 /*递归搜索*/
            permute(pos+1);
- 
+
 /*恢复递归前的值，目的是使以后改元素可用*/
  used[i]--;
         }
@@ -41,8 +41,6 @@ void permute(int pos)
 
 相关问题
 UVA 524 Prime Ring Problem
-
- 
 
 可重排列：就是从任意n个元素中，取r个可重复的元素的排列。例如，对于集合OR={1,1,2,2}, n = |OR| = 4, r = 2,那么排列如下：
 
@@ -60,7 +58,7 @@ int n, r;
 int E[MaxN] = {0,0,1,1,1};
 int P[MaxN];
 char used[MaxN];
- 
+
 void permute(int pos)
 {
 int i;
@@ -90,8 +88,6 @@ int i;
 相关习题
 UVA 10098 Generating Fast, Sorted Permutations
 
- 
-
 组合：从n个不同元素中取r个不重复的元素组成一个子集，而不考虑其元素的顺序，称为从n个中取r个的无重组合，例如OR = {1,2,3,4}, n = 4, r = 3则无重组合为：
 
 {1,2,3}; {1,2,4}; {1,3,4}; {2,3,4}.
@@ -101,7 +97,7 @@ UVA 10098 Generating Fast, Sorted Permutations
 int n, r;
 int C[5];
 char used[5];
- 
+
 void combine(int pos, int h)
 {
 int i;
@@ -128,7 +124,7 @@ int i;
 相关问题：
 Ural 1034 Queens in peaceful position
 
- 
+
 
 可重组合：类似于可重排列。
 
@@ -142,7 +138,7 @@ int  n, r;
 char used[MaxN];
 int  p[MaxN];
 double min;
- 
+
 void permute(int pos, double dist)
 {
 int i;
@@ -187,26 +183,26 @@ Ural
 1060 Flip Game
 1152 The False Mirrors
 
- 
+
 
 [例]找最大团问题。
 
 一个图的团，就是包括了图的所有点的子图，并且是连通的。也就是说，一个子图包含了n个顶点和n*(n-1)/2条边，找最大团问题是一个NP问题。算法如下：
 
 #define MaxN 50
- 
+
 int  n, max;
 int  path[MaxN][MaxN];
 int  inClique[MaxN];
- 
+
 void dfs(int inGraph[])
 {
 int i, j;
 int Graph[MaxN];
- 
+
 if ( inClique[0]+inGraph[0]<=max ) return;
 if ( inClique[0]>max ) max=inClique[0];
- 
+
 /*对于图中的所有点*/
     for (i=1; i<=inGraph[0]; i++)
     {
@@ -243,7 +239,7 @@ int i, j;
   }
   return 0;}
 
- 
+
 
  参考论文 <A fast algorithm for the maximum clique problem>
 
@@ -251,7 +247,7 @@ int i, j;
 
 acm.zju.edu.cn: 1492 maximum clique
 
- 
+
 
 相关网站
 
@@ -259,7 +255,7 @@ http://acm.uva.es/p
 
 http://acm.timus.ru/
 
- 
+
 
 Contact me:
 
@@ -310,7 +306,7 @@ void Perm(char *List, int m, int k)
              for(int i=0; i<=ListLength-1; i++)
              {
                      cout<<List[i];
-             }            
+             }
              cout<<endl;
      }
      else
@@ -320,10 +316,10 @@ void Perm(char *List, int m, int k)
                   Swap(List[m],List[i]);
                   Perm(List, m+1, k);
                   Swap(List[m],List[i]);
-                 
-         }        
+
+         }
      }
-        
+
 }
 int main()
 {
@@ -331,7 +327,7 @@ int main()
     char List[ListLength]={'a','b','c'};
     Perm(List, 0, ListLength-1);
     system("pause");
-    return 0; 
+    return 0;
 
 }
 
@@ -357,7 +353,7 @@ int main()
                                  取出b存入Buffer[0],输出。
                                  然后调用SubSet(char *List, 1, char *Buffer, 1)把Buffer[1]=c
                                     输出bc。
-                                 取出c存入Buffer[0],输出。               
+                                 取出c存入Buffer[0],输出。
 */
 #include <iostream>
 using namespace std;
@@ -370,12 +366,12 @@ void Output(char *Buffer, int flag)
      static int count=1;
      if(count==1)
      {
-              cout<<count++<<": { }"<<endl;        
+              cout<<count++<<": { }"<<endl;
      }
      cout<<count++<<": {";
      for(int i=0; i<=flag; i++)
      {
-              cout<<Buffer[i];            
+              cout<<Buffer[i];
      }
      cout<<"}"<<endl;
 }
@@ -386,15 +382,15 @@ int Index(char *List, char c)
      {
               if(c==List[i])
               {
-                    return i;            
+                    return i;
                     break;
-              }                 
+              }
      }
-     return -1;    
+     return -1;
 }
 
 void SubSet(char *List, int m, char *Buffer, int flag)
-{    
+{
      if(m <= ListLength-1)
      {
           /*if(m==0)
@@ -406,23 +402,23 @@ void SubSet(char *List, int m, char *Buffer, int flag)
           {
                 Buffer[flag]=List[m];
           }*/
-         
+
           for(int i=(flag==0) ? 0 : Index(List,Buffer[flag-1])+1; i<=ListLength-1; i++)
           //当flag==0时，Buffer中没有任何元素，此时i=[0...ListLength-1]
           //当flag>0时，找到Buffer中的最后一个元素在集合List中的位置i，把[i....ListLength-1]
           //处的元素，加到Buffer元素的最后面
           {
-                Buffer[flag]=List[i];               
+                Buffer[flag]=List[i];
                 Output(Buffer,flag);
                 SubSet(List, m+1, Buffer,flag+1);
-          }         
+          }
      }
      return;
 }
 
 int main()
 {
-    char List[ListLength]={'a','b','c','d','e','f','g','h','i','j'};  
+    char List[ListLength]={'a','b','c','d','e','f','g','h','i','j'};
     //char List[ListLength]={'a','b','c'};
     char Buffer[ListLength]={' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
     //char Buffer[ListLength]={' ',' ',' '};
@@ -431,5 +427,5 @@ int main()
     //cout<<Index(List,'c');  OK
     SubSet(List,0,Buffer,0);
     system("pause");
-    return 0;  
+    return 0;
 }

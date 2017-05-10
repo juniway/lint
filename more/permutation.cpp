@@ -12,6 +12,7 @@ void permute(string& str, int index, vector<string>& result){
 		swap(str[i], str[index]);
 	}
 }
+
 // 2.
 void permute(string select, string remain){
 	if(remain == ""){
@@ -150,7 +151,7 @@ void QuickPerm()
    } // while(i < N)
 } // QuickPerm()
 
-void display(unsigned int *a, unsigned int j, unsigned int i)            
+void display(unsigned int *a, unsigned int j, unsigned int i)
 {
    for(unsigned int x = 0; x < N; x++)
       printf("%d ",a[x]);

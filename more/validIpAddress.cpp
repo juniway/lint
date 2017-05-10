@@ -1,43 +1,43 @@
 // isIpLeagal
 
 // 要点
-// 1. 
+// 1.
 // 2.
 
-bool valid_digit(char *ip_str){ 
+bool valid_digit(char *ip_str){
 	char *p = ip_str;
-    while (*p) { 
-        if (*p >= '0' && *p <= '9') 
+    while (*p) {
+        if (*p >= '0' && *p <= '9')
             ++p;
-        else 
+        else
             return false;
-    } 
+    }
     return atoi(p) >= 0 && atoi(p) <= 255;
-} 
-    
-/* return 1 if IP string is valid, else return 0 */ 
-bool is_valid_ip(char *ip_str){ 
-    int dots = 0; 
-    char *ptr; 
-    if (ip_str == nullptr) 
-        return false; 
-    
+}
+
+// return 1 if IP string is valid, else return 0
+bool is_valid_ip(char *ip_str){
+    int dots = 0;
+    char *ptr;
+    if (ip_str == nullptr)
+        return false;
+
     ptr = strtok(ip_str, DELIM); // get the first part
     if (ptr == nullptr)
-        return false; 
-    
+        return false;
+
     while(ptr){
         // after parsing string, it must contain only digits
-        if (!valid_digit(ptr)) return false; 
+        if (!valid_digit(ptr)) return false;
         // parse remaining string
-        ptr = strtok(nullptr, DELIM); 
+        ptr = strtok(nullptr, DELIM);
         if (ptr != nullptr)
             ++dots;
     }
     // valid IP string must contain 3 dots
-    if (dots != 3) 
-        return false; 
-    return true; 
+    if (dots != 3)
+        return false;
+    return true;
 }
 
 // 直接用库函数判断

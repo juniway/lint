@@ -5,9 +5,8 @@ using namespace std;
 void merge(int* a, int left, int mid, int right);
 
 void merge_sort(int* a, int low, int high){
-    int mid;
     if(low < high){
-        mid = low + (high - low)/2;
+        int mid = low + (high - low)/2;
         merge_sort(a, low, mid);
         merge_sort(a, mid+1, high);
         merge(a, low, mid, high);
@@ -52,6 +51,23 @@ void merge(int* a, int low, int mid, int high){
     delete b;
 }
 
+
+
+void merge_sort(vector<int> &nums, int low, int high) {
+    if (low < high) {
+        int mid = low + (high - low) / 2;
+        merge_sort(nums, low, mid);
+        merge_sort(nums, mid + 1, high)
+        merge(nums, low, mid, high);
+    }
+}
+
+vector<int> merge(vector<int> &nums, int low, int mid, int high) {
+    vector<int> res;
+    int i = low, j = high, k = mid;
+    while (i < j)
+}
+
 int main(){
 
     int arr[]={7, 28, 11, 25, 55, 34, 17, 9, 3, 13};
@@ -67,5 +83,4 @@ int main(){
     cout<<endl;
 
     return 0;
-
 }

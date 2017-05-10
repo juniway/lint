@@ -29,21 +29,21 @@ tmp_array[]：辅助数组。
 left_pos：数组左半部分的游标
 left_end：左边数组的右界限
 */
-void Merge(int array[], int tmp_array[], int left_pos, int right_pos, int right_end) {
+void Merge(int array[], int tmp_array[], int left_pos, int mid, int right_end) {
     int i, left_end, num_elements, tmp_pos;
-    left_end = right_pos - 1;
+    left_end = mid - 1;
     tmp_pos = left_pos;
     num_elements = right_end - left_pos + 1;
 
-    while (left_pos <= left_end && right_pos <= right_end)
-        if (array[left_pos] <= array[right_pos])
+    while (left_pos <= left_end && mid <= right_end)
+        if (array[left_pos] <= array[mid])
             tmp_array[tmp_pos++] = array[left_pos++];
         else
-            tmp_array[tmp_pos++] = array[right_pos++];
+            tmp_array[tmp_pos++] = array[mid++];
     while (left_pos <= left_end)
         tmp_array[tmp_pos++] = array[left_pos++];
-    while (right_pos <= right_end)
-        tmp_array[tmp_pos++] = array[right_pos++];
+    while (mid <= right_end)
+        tmp_array[tmp_pos++] = array[mid++];
     for (i = 0; i < num_elements; i++, right_end--)
         array[right_end] = tmp_array[right_end];
 }
