@@ -14,14 +14,14 @@ Langford's problem is the task of finding Langford pairings for a given value of
 // For example, a Langford pairing for n = 3 is given by the sequence 2,3,1,2,1,3.
 // there is no Langford pairing when n = 1, 2, or 5.
 
-// A Langford pairing for n = 4.
-//  _________4________
-// |                  |
-// |        _______3__|___
-// |       |          |   |
-// 4   1   3  1   2   4   3   2
-//     |______|   |___________|
-//         1            2
+ A Langford pairing for n = 4.
+  _________4________
+ |                  |
+ |        _______3__|___
+ |       |          |   |
+ 4   1   3  1   2   4   3   2
+     |______|   |___________|
+         1            2
 
 /*
 n =  1 :          0 solutions (     0 s)

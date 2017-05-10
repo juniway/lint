@@ -2,7 +2,7 @@
 
 //http://leetcode.com/2010/09/printing-binary-tree-in-level-order.html
 
-
+// 用两个 queue
 void printLevelOrder_twoQueues(BinaryTree *root) {
 	if (!root) return;
 	queue<BinaryTree*> currentLevel, nextLevel;
@@ -22,9 +22,9 @@ void printLevelOrder_twoQueues(BinaryTree *root) {
 	}
 }
 
-
+// 用一个 queue，外加两个变量记录 queue 前后元素数量
 void printLevelOrder_oneQueue(Node *root) {
-	if (!root) 
+	if (!root)
 		return;
 
 	queue<Node*> nodesQueue;

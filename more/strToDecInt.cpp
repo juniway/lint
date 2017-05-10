@@ -4,7 +4,7 @@
 int StrtoDecInt(const char* str){
     static const int MAX = (int)((unsigned)~0 >> 1);
 	static const int MIN = -(int)((unsigned)~0 >> 1) - 1;
-	
+
 	unsigned int n = 0;
 	int sign = 1;
 	unsigned int c;
@@ -20,14 +20,14 @@ int StrtoDecInt(const char* str){
 
 	while(isdigit(*str)){
 		c = *str - '0';
-		if(sign > 0 && (n > MAX/10 || (n == MAX/10 && c > MAX % 10))){
+		if(sign > 0 && (n > MAX/10 || (n == MAX/10 && c > MAX % 10))) { // 考虑最大的正数
 			n = MAX;
 			break;
-		}else if (sign < 0 && (n > (unsigned) MIN/10 || (n== (unsigned) MIN/10 && c > (unsigned) MIN % 10))){
+		} else if (sign < 0 && (n > (unsigned) MIN/10 || (n== (unsigned) MIN/10 && c > (unsigned) MIN % 10))){ // 最小的负数
 			n = MIN;
 			break;
 		}
-		n = n*10 +c;
+		n = n*10 + c;
 		++str;
 	}
 	return sign > 0 ? n : -n;

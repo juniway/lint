@@ -1,5 +1,6 @@
 // 使数组中所有奇数位于前半部分，所有偶数位于后半部分
 
+// 双指针，分别从两头遍历，然后交换。
 void OddEven(int *pData, unsigned int len, bool (*func(int))){
 	if(pData == nullptr || len <= 0){
 		return;

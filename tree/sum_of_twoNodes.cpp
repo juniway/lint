@@ -16,16 +16,17 @@ struct Node{
 
 
 Node* insert(int num){
-    Node* root = (Node*)malloc(sizeof(struct Node*));
+    Node* root = new Node();
     root->data = num;
-    root->left = NULL;
-    root->right = NULL;
+    root->left = nullptr;
+    root->right = nullptr;
     return root;
 }
 
 bool twoNodesHaveSum(Node* root1, int sum, int *v1, int *v2){
     Node* root2 = root1;
     stack<Node*> s1, s2;
+
     do{
         while(root1){
             s1.push(root1);
@@ -37,24 +38,23 @@ bool twoNodesHaveSum(Node* root1, int sum, int *v1, int *v2){
         }
         int val1 = s1.top()->data;
         int val2 = s2.top()->data;
-        if(s1.top()!=s2.top() && val1 + val2 == sum){
+        if(s1.top() != s2.top() && val1 + val2 == sum){
             *v1 = val1;
             *v2 = val2;
             return true;
-        }
-        else if(val1 + val2 > sum){
+        } else if(val1 + val2 > sum){
             root2 = s2.top();
             root2 = root2->left;
             s2.pop();
             root1 = NULL;
-        }
-        else{
+        } else{ // val1 + val2 < sum
             root1 = s1.top();
             root1 = root1->right;
             s1.pop();
             root2 = NULL;
         }
-    }while((root1 || !s1.empty())&& (root2 || !s2.empty()));
+    } while ((root1 || !s1.empty()) && (root2 || !s2.empty()));
+
     return false;
 }
 
@@ -67,10 +67,9 @@ int main(){
     root->right->left = insert(6);
     root->right->right = insert(21);
     int v1,v2;
-    if(sumNums(root,10,&v1,&v2)){
-        printf("%d %d",v1,v2);
-    }
-    else
+    if(sumNums(root, 10, &v1, &v2)){
+        printf("%d %d", v1, v2);
+    } else
         printf("Sum not found!");
     return 0;
 }

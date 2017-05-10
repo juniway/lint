@@ -1,31 +1,37 @@
 #include <iostream>
 #include <cstdio>
+
 using namespace std;
 
+// C++ 语法定义 Node 和 Tree
 class Node{
 public:
 	int item;
 	Node *left;
 	Node *right;
-	
-	Node(int num, Node *l = 0, Node*r = 0):item(num), left(l), right(r){} // constructor
+
+	Node(int num, Node *l = 0, Node*r = 0) : item(num), left(l), right(r) {} // constructor
 };
 
 
+// 二叉树的常见操作
+// 1. 遍历: inorder, preorder, postorder
+// 2. 插入
+// 3. 搜索
+// 4. 删除
+// 5. 前驱节点 parent
+// 6. 后继节点 successor
 class Tree{
-
-
-// public methods
 public:
 	Tree() { root = NULL; }
-	
+
 	void inorder() { inorder(root);	}
 	void insert(int num){ insert(root, num); }
 	Node* search(int num){ return search(root, num); }
 	void del(Node* &);
-	Node* parent(Node* node) const{ // return node's parent
+	Node* parent(Node* node) const { // return node's parent
 		Node *temp = root;
-		while(temp->left!=node  &&  temp->right!=node) {
+		while(temp->left != node && temp->right != node) {
 			if(node->item < temp->item) // binary search
 				temp = temp->left;
 			else
@@ -33,14 +39,13 @@ public:
 		}
 		return temp;
 	}
+
 	int maximum(){ return maximum(root); }
 	int minimum() { return minimum(root); }
 	int successor(int);
 
 private:
 	Node *root;
-	
-	// private methods
 	Node* search(Node *m, int num);
 	void insert(Node *&, int num);		// CALL BY REFERENCE.
 	void inorder(Node *) const;			// in_order traversal
@@ -116,7 +121,6 @@ Node* Tree::search(Node *q, int num){
 
 
 void Tree::del(Node* &q){
-
 	if(!q->left)
 		transplant(q, q->right);
 	else if(!q->right)
@@ -152,7 +156,7 @@ int Tree::minimum(Node *node) {
 
 // test program
 int main(){
-    
+
 	Tree bst;
 	bst.insert(1);
 	bst.insert(2);

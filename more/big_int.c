@@ -3,12 +3,15 @@
 #include <stdlib.h>
 #include <math.h>
 
+
+// 大整数都是通过 char 数组来实现的。
+// 关键是实现手动的进位
 char* add_big_int(char* num1, char* num2){
 	int carry = 0;
 	int i = strlen(num1) - 1;
 	int j = strlen(num2) - 1;
 	int max_len = i > j ? (i + 1) : (j + 1);
-	
+
 	char* result = (char*)malloc(max_len + 1); // save result
 	if(result = NULL) return -1;
 	result[max_len] = '\0';

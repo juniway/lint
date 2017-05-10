@@ -6,12 +6,10 @@ public:
             if (s > arr[i][j]){
                 i++;
                 continue;
-            }
-            else if (s < arr[i][j]){
+            } else if (s < arr[i][j]){
                 j--;
                 continue;
-            }
-            else{
+            } else{
                 return true;
             }
         }

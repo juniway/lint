@@ -1,10 +1,10 @@
 // http://blog.csdn.net/xnn2s/article/details/7310515
 // http://ju.outofmemory.cn/entry/50447
 // http://www.360doc.com/content/13/0805/16/13247663_304916783.shtml
-今天也介绍一下LFU的实现方法。LRU是最近最少使用算法，就是把最早才访问的数据淘汰掉。
-LFU是最近最不常用算法，就是某一段时间内被用到最少的淘汰掉。
+今天也介绍一下 LFU 的实现方法。LRU 是最近最少使用算法，就是把最早才访问的数据淘汰掉。
+LFU 是最近最不常用算法，就是某一段时间内被用到最少的淘汰掉。
 
-LFU时间周期
+LFU 时间周期
 	使用次数的时间长度，这个时间不能太短，短了体现不出哪些数据是热点；
 	同样也不能太长，太长的话，某一个时间点的对某个数据的访问峰值可以长期影响我们的淘汰策略。
 	一般实现的算法可以根据业务特点去调节这个参数。
@@ -55,7 +55,7 @@ class LFUCache{
 public:
 	CacheEntry* get(string key){
 		if (m_map.find(key) == m_map.end()) return nullptr; // not found!
-		
+
 		return m_map[key]->value;
 	}
 

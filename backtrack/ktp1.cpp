@@ -27,26 +27,27 @@ using namespace std;
 
 
 // defines a structure for chess moves
-typedef struct chess_moves {
+// each chess has 8 move directions
+struct chess_moves {
    // 'x' and 'y' coordinates on chess board
    int x, y;
-} chess_moves;
+};
 
 // displays the knight tour solution
 void printTour(int tour[N][N]) {
-   int i,j;
+   int i, j;
    for (i = 0; i < N; i++) {
       for (j = 0; j < N; j++) {
-          cout<<tour[i][j]<<"\t";
+          cout << tour[i][j] << "\t";
       }
-      cout<<endl;
+      cout << endl;
    }
 }
 
 // check if the next move (as per knight's constraints) is possible
-bool isMovePossible(chess_moves next_move, int tour[N][N]) {
-   int i = next_move.x;
-   int j = next_move.y;
+bool isMovePossible(chess_moves next_pos, int tour[N][N]) {
+   int i = next_pos.x;
+   int j = next_pos.y;
    if ((i >= 0 && i < N) && (j >= 0 && j < N) && (tour[i][j] == 0))
       return true;
    return false;
@@ -54,39 +55,69 @@ bool isMovePossible(chess_moves next_move, int tour[N][N]) {
 
 
 // recursive function to find a knight tour
-bool findTour(int tour[N][N], chess_moves move_KT[], chess_moves curr_move, int move_count){
+bool findTour(int tour[N][N], chess_moves move_delta[], chess_moves cur_pos, int move_count) {
    int i;
-   chess_moves next_move;
-   if (move_count == N*N-1) {
+   chess_moves next_pos;
+   if (move_count == N * N - 1) {
       // Knight tour is completed
-      // i.e all cells on the chess board has been visited by knight once
+      // When all cells on the chess board has been visited by knight once
+      printTour(tour);
       return true;
    }
 
    // try out the possible moves starting from the current position
    for (i = 0; i < N; i++) {
       // get the next move
-      next_move.x = curr_move.x + move_KT[i].x;
-      next_move.y = curr_move.y + move_KT[i].y;
+      next_pos.x = cur_pos.x + move_delta[i].x;
+      next_pos.y = cur_pos.y + move_delta[i].y;
 
-      if (isMovePossible(next_move, tour)) {
+      if (isMovePossible(next_pos, tour)) {
          // if the move is possible
          // increment the move count and store it in tour matrix
-         tour[next_move.x][next_move.y] = move_count + 1;
-         if (findTour(tour, move_KT, next_move, move_count + 1)) {
+         tour[next_pos.x][next_pos.y] = move_count + 1;           // Set
+         if (findTour(tour, move_delta, next_pos, move_count + 1)) { // 增加一个返回值只是为了用于打印是否存在一个解。但是一旦加了返回值，就只会输出一个解。
             return true;
          } else {
             // this move was invalid, try out other possiblities
-            tour[next_move.x][next_move.y] = 0;
+            tour[next_pos.x][next_pos.y] = 0;                     // Unset
          }
       }
    }
    return false;
 }
 
+int sol_cnt = 0;
+
+void findTour1(int tour[N][N], chess_moves move_delta[], chess_moves cur_pos, int move_count) {
+   chess_moves next_pos;
+   if (move_count == N * N - 1) {
+      // Knight tour is completed
+      // When all cells on the chess board has been visited by knight once
+      printTour(tour);
+      ++sol_cnt;
+      return;
+   }
+
+   // try out the possible moves starting from the current position
+   for (int i = 0; i < N; i++) {
+      // get the next move
+      next_pos.x = cur_pos.x + move_delta[i].x;
+      next_pos.y = cur_pos.y + move_delta[i].y;
+
+      if (isMovePossible(next_pos, tour)) {
+         // if the move is possible
+         // increment the move count and store it in tour matrix
+         tour[next_pos.x][next_pos.y] = move_count + 1;        // Set
+         findTour(tour, move_delta, next_pos, move_count + 1);
+         tour[next_pos.x][next_pos.y] = 0;                     // Unset
+      }
+   }
+   // return false;
+}
+
 // wrapper function
 void knightTour() {
-   int tour[N][N];
+   int tour[N][N];  // tour 用于存每个格子是第几步
    int i, j;
 
    // initialize tour matrix
@@ -97,20 +128,23 @@ void knightTour() {
    }
 
    // all possible moves that knight can take
-   chess_moves move_KT[8] = { {2, 1}, {1, 2}, {-1, 2}, {-2, 1},
+   chess_moves move_delta[8] = { {2, 1}, {1, 2}, {-1, 2}, {-2, 1},
                               {-2, -1}, {-1, -2}, {1, -2}, {2, -1}};
 
    // knight tour starts from coordinate (0,0)
-   chess_moves curr_move = {0, 0};
+   chess_moves cur_pos = {0, 0};
 
    // find a possible knight tour using a recursive function
    // starting from current move
-   if(findTour(tour, move_KT, curr_move, 0) == false) {
-      cout<<"\nKnight tour does not exist";
-   } else {
-      cout<<"\nTour exist ...\n";
-      printTour(tour);
-   }
+   // if(findTour(tour, move_delta, cur_pos, 0) == false) {
+   //    cout<<"\nKnight tour does not exist";
+   // } else {
+   //    cout<<"\nTour exist ...\n";
+   //    // printTour(tour);
+   // }
+
+   findTour1(tour, move_delta, cur_pos, 0);
+   cout << "solutions: " << sol_cnt << endl;
 }
 
 // main

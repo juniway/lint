@@ -5,7 +5,7 @@ using namespace std;
 template <typename T>
 class BinarySearchTree{
     public:
-        BinarySearchTree(){ rootNode = nullptr;}; // constructor
+        BinarySearchTree(){ rootNode = nullptr; }; // constructor
 		~BinarySearchTree(){ }; // constructor
         void insert(T);
         void search(T);
@@ -25,9 +25,9 @@ void BinarySearchTree<T>::insert(T newNum){
     newNode->leftchild = newNode->rightchild = nullptr;
 
     Node *prev = nullptr;
-    if(rootNode == nullptr)
+    if(rootNode == nullptr) {
         rootNode = newNode;
-    else{
+    } else{
         Node *current =  rootNode;
 
         while(current != nullptr){
@@ -53,8 +53,7 @@ void BinarySearchTree<T>::search(T toFindNum){
     if(current->data == toFindNum){
         rootflag = true;
         cout<<"Found the element, it is root."<<endl;
-    }
-    else{
+    } else {
         while(current != nullptr && current->data != toFindNum){
             //parent = current;
             if(current->data >= toFindNum)

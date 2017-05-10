@@ -1,31 +1,31 @@
 // KTP, Knight's Tour Problem
 // https://en.wikipedia.org/wiki/Knight%27s_tour
-A knight's tour is a sequence of moves of a knight on a chessboard 
+A knight's tour is a sequence of moves of a knight on a chessboard
 such that the knight visits every square only once.
 
-The knight's tour problem is the mathematical problem of finding a knight's tour. 
-Creating a program to find a knight's tour is a common problem given to 
-computer science students.[1] 
-Variations of the knight's tour problem involve chessboards of different sizes 
+The knight's tour problem is the mathematical problem of finding a knight's tour.
+Creating a program to find a knight's tour is a common problem given to
+computer science students.[1]
+Variations of the knight's tour problem involve chessboards of different sizes
 than the usual 8 × 8, as well as irregular (non-rectangular) boards.
 
-The knight's tour problem is an instance of the more general Hamiltonian path problem 
+The knight's tour problem is an instance of the more general Hamiltonian path problem
 in graph theory.
-The problem of finding a closed knight's tour is similarly an instance of the 
-Hamiltonian cycle problem. Unlike the general Hamiltonian path problem, 
+The problem of finding a closed knight's tour is similarly an instance of the
+Hamiltonian cycle problem. Unlike the general Hamiltonian path problem,
 the knight's tour problem can be solved in linear time.
 
 
 Warnsdorf's rule
-Warnsdorf's rule is a heuristic for finding a knight's tour. 
-We move the knight so that we always proceed to the square from which the knight will have the fewest onward moves. 
-When calculating the number of onward moves for each candidate square, we do not count moves that revisit any square already visited. 
-It is, of course, possible to have two or more choices for which the number of onward moves is equal; 
+Warnsdorf's rule is a heuristic for finding a knight's tour.
+We move the knight so that we always proceed to the square from which the knight will have the fewest onward moves.
+When calculating the number of onward moves for each candidate square, we do not count moves that revisit any square already visited.
+It is, of course, possible to have two or more choices for which the number of onward moves is equal;
 there are various methods for breaking such ties, including one devised by Pohl [14] and another by Squirrel and Cull.[15]
 
-This rule may also more generally be applied to any graph. 
+This rule may also more generally be applied to any graph.
 In graph-theoretic terms, each move is made to the adjacent vertex with the least degree.
- Although the Hamiltonian path problem is NP-hard in general, on many graphs that occur in practice 
+ Although the Hamiltonian path problem is NP-hard in general, on many graphs that occur in practice
  this heuristic is able to successfully locate a solution in linear time.[14] The knight's tour is a special case.[16]
 
 
@@ -34,11 +34,11 @@ In graph-theoretic terms, each move is made to the adjacent vertex with the leas
 #define N 8
 
 int board[N][N] = {0};
-int ktmove1[8] = {1,2,2,1,-1,-2,-2,-1};   //对应骑士可走的8个方向
+int ktmove1[8] = {1,2,2,1,-1,-2,-2,-1};   // 对应骑士可走的8个方向
 int ktmove2[8] = {-2,-1,1,2,2,2,-1,-2};
-int nexti[8] = {0};                       //测试下一步的出路
+int nexti[8] = {0};                       // 测试下一步的出路
 int nextj[8] = {0};
-int exits[8] = {0};                       //记录出路的格个数
+int exits[8] = {0};                       // 记录出路的格个数
 
 int travel(int x, int y) {
     int i,j,k,m,l,tmpi,tmpj,tmp,min,cnt;

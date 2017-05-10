@@ -55,8 +55,8 @@ int main(){
 	// insert(root, 55);
 	// insert(root, 91);
 	// insert(root, 83);
-	
-    
+
+
     printLevelOrder_oneQueue(root);
     // cout << endl;
 	// inorder_iterative(root);
@@ -64,7 +64,7 @@ int main(){
 	// morris_inorder(root);
     int ht = height(root);
     cout<<"height="<<ht<<endl;
-    
+
 	return 0;
 }
 
@@ -77,7 +77,7 @@ void insert(Node*& root, int num){
     Node* newNode = (Node*)malloc(sizeof(struct Node)); // tree* root = new root
 	newNode->data = num;
 	newNode->left = newNode ->right = nullptr;
-    
+
     Node* prev = root, * cur = root;
 
 	while(cur!=nullptr){
@@ -104,8 +104,7 @@ void search(Node* rootNode, int toFindNum){
     if(current->data == toFindNum){
         rootflag = true;
         cout << "Found the element, it is root." << endl;
-    }
-    else{
+    } else{
         while(current && current->data != toFindNum){
             //parent = current;
             if(current->data >= toFindNum)
@@ -122,14 +121,13 @@ void search(Node* rootNode, int toFindNum){
 
 void pre_order(Node *node){
     stack<Node*> stk;
-    while(node != nullptr || !stk.empty()){
-        if(node != nullptr){
+    while (node != nullptr || !stk.empty()) {
+        if (node != nullptr) {
             visit(node);
             if(node->right != nullptr)
                 stk.push(node->right);
             node = node->left;
-        }
-        else{
+        } else {
             node = stk.top();
             stk.pop();
         }
@@ -172,7 +170,7 @@ void post_order(Node *node){
 				lastvisitnode = stk.top();
 				stk.pop();
 			}
-		}	
+		}
 	}
 }
 
@@ -201,16 +199,16 @@ void morris_inorder(Node *root){
                p = p->left;
            }
            else{
-               printf("%d ", p->data); 
+               printf("%d ", p->data);
                tmp->right = NULL;
                p = p->right;
            }
        }
    }
    cout << endl;
-} 
+}
 
-// LeetCode, 
+// LeetCode,
 // Morris pre_order，时间复杂度O(n)，空间复杂度O(1)
 // http://www.acmerblog.com/leetcode-solution-binary-tree-preorder-traversal-6351.html
 
@@ -249,24 +247,24 @@ int postOrder_iterative(Node* root){
 
     stack<Node*> st ;
     bool leftTraversed = false;
-    
+
     int h = 0;
     while (true) {
         while (root != nullptr && leftTraversed == false) {
             st.push(root);
             root = root->left;
         }
-        
+
         if (h < (int)st.size())
             h = st.size();
-        
+
         if (st.empty())
             break;
-        
-        Node* temp = st.top();  
+
+        Node* temp = st.top();
 
         if (temp->right && temp->right != root) {
-            
+
             root = temp->right;
             leftTraversed = false;
         }
@@ -277,7 +275,7 @@ int postOrder_iterative(Node* root){
             leftTraversed = true;
         }
     }
-    
+
     return h;
 }
 

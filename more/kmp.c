@@ -55,13 +55,13 @@ void getNext(vector<int> &next, string &P) {
 
 /*
     上面的是通常用的KMP算法，但是算法是有一定缺陷的。
-    比如我们的模式串  pattern =“AAAAB”，其中很容易得到next数组为01230。
+    比如我们的模式串 pattern =“AAAAB”，其中很容易得到 next 数组为01230。
     如果目标匹配串为 “AAAACAAAAB” ，大家可以模拟一下，A要回溯多次。
-    就是说我们的next数组优化并不彻底。
-    优化算法：next[i]表示匹配串在i处如果匹配失败下次移到的位置。
-    下面是优化后的的求next数组的代码。
-    虽然两种写求得next值不一样，但是kmp函数的写法是一样的。
-    此时得出的next数组是{-1, -1, -1, -1, 3}
+    就是说我们的 next 数组优化并不彻底。
+    优化算法：next[i] 表示匹配串在 i 处如果匹配失败下次移到的位置。
+    下面是优化后的的求 next 数组的代码。
+    虽然两种写求得 next 值不一样，但是 kmp 函数的写法是一样的。
+    此时得出的next数组是 {-1, -1, -1, -1, 3}
 */
 void getNext(vector<int> &next, string &needle) {
     int i = 0, j = -1;
@@ -140,10 +140,6 @@ int strStr_kmp(string haystack, string needle) {
     }
     return -1;
 }
-
-
-
-
 
 int main(){
 
