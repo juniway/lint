@@ -51,18 +51,18 @@ void BinarySearchTree<T>::insert(T newNum){
 }
 
 template< typename T>
-void BinarySearchTree<T>::search(T toFindNum){
+void BinarySearchTree<T>::search(T val){
 	Node<T> *current = rootNode;
 //	Node *parent = rootNode;
 	bool rootflag = false;
-	if(current->data == toFindNum){
+	if(current->data == val){
 		rootflag = true;
 		cout<<"Found the element, it is root."<<endl;
 	}
     else{
-    	while(current && current -> data != toFindNum){
+    	while(current && current -> data != val){
     		//parent = current;
-    		if(current -> data >= toFindNum)
+    		if(current -> data >= val)
     			current = current -> leftchild;
     		else
     			current = current -> rightchild;
@@ -80,7 +80,7 @@ Node<T>* BinarySearchTree<T>::get_deepest_node(Node<T>* root){
         return nullptr;
     queue<Node<T>*> qnode;
     qnode.push(root);
-    
+
     Node<T>* current;
     while(!qnode.empty()){
         current = qnode.front();

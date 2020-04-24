@@ -1,0 +1,15 @@
+test
+tags
+*.log
+*.txt
+*.out
+*.o
+*.a
+*.so
+*.gch
+*.exe
+*~
+Makefile
+makefile
+MakeFile
+makeFile

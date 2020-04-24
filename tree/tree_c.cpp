@@ -137,16 +137,16 @@ void pre_order(Node *node){
 
 void in_order(Node *node) {
     stack<Node*> s; // Initially empty
-		while(!s.empty() || node != nullptr) {
-			if(node != nullptr){
-				s.push(node);
-				node = node->left;
-			}
-			else {
-				Node *temp = s.top(); // visit(temp);
-				cout << temp->data << " ";
-	            s.pop();
-				node = temp->right;
+	while(!s.empty() || node != nullptr) {
+		if(node != nullptr){
+			s.push(node);
+			node = node->left;
+		}
+		else {
+			Node *temp = s.top(); // visit(temp);
+			cout << temp->data << " ";
+            s.pop();
+			node = temp->right;
 		}
 	}
 	cout << endl;
@@ -166,7 +166,7 @@ void post_order(Node *node){
 				 /* if right child exists AND traversing node from left child, move right */
 				node = topnode->right;
 			else{
-				visit(node);
+				visit(topnode);
 				lastvisitnode = stk.top();
 				stk.pop();
 			}

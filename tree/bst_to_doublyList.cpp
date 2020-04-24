@@ -17,7 +17,7 @@ void InOrder(BST_Node* parent, BST_Node*& first, BST_Node*& last){
     }
 	else // if the node does not have left sub-tree
 		first = parent;
-	
+
     if (parent->right != nullptr){
         BST_Node* tmpFirst;
         InOrder(parent->right, tmpFirst, last);
@@ -27,16 +27,16 @@ void InOrder(BST_Node* parent, BST_Node*& first, BST_Node*& last){
     else
 		last = parent; // if the node does not have left sub-tree
 }
- 
+
 BST_Node* TreeToList(BST_Node* root){
     if(nullptr == root) return nullptr;
-    
+
     BST_Node* first;
     BST_Node* last;
     InOrder(root, first, last);
     first->left = last;
     last->right = first;
-    
+
     return first;
 }
 
@@ -53,7 +53,7 @@ BST_Node *createNewNode(int val) {
 
 //insert a node to the tree
 BST_Node *insert(BST_Node *root, int data){
-    if(!root) 
+    if(!root)
         return createNewNode(data);
     else{
         if(data<=root->data)
@@ -61,48 +61,13 @@ BST_Node *insert(BST_Node *root, int data){
         else
             root->right = insert(root->right, data);
     }
-    
+
     return root;
-}
-
-void print_dll(BST_Node* node){
-    BST_Node* root = node;
-    while(node!=nullptr){
-        printf("%d ", node->data);
-        node=node->right;
-        if(node==root) break;
-    }
-}
-
-void PreOrderTraversal(BST_Node *root){
-    if(root!=nullptr){
-        printf("%d ", root->data);
-        PreOrderTraversal(root->left);
-        PreOrderTraversal(root->right);
-    }
-    
-}
-
-void InOrderTraversal(BST_Node *root){
-    if(root!=nullptr){
-        InOrderTraversal(root->left);
-        printf("%d ", root->data);
-        InOrderTraversal(root->right);
-    }
-}
-
-
-void PostOrderTraversal(BST_Node *root){
-    if(root!=nullptr){
-        PostOrderTraversal(root->left);
-        PostOrderTraversal(root->right);
-        printf("%d ", root->data);
-    }
 }
 
 int main(){
     BST_Node* bst =nullptr;
-    
+
     bst = insert(bst, 10);
     bst = insert(bst, 6);
     bst = insert(bst, 4);
@@ -110,10 +75,10 @@ int main(){
     bst = insert(bst, 14);
     bst = insert(bst, 12);
     bst = insert(bst, 16);
-   
+
     BST_Node* dll = TreeToList(bst);
     print_dll(dll);
-    
+
     return 0;
 }
 /*
@@ -129,7 +94,7 @@ void ConvertNode(BST_Node* pNode, BST_Node*& pLastNodeInList){
         ConvertNode(pCurrent->left, pLastNodeInList); // move pCurrent to the left most leaf
 
     pCurrent->left = pLastNodeInList; // initially pLastNodeInList is nullptr, then it is updated to pCurrent
-	
+
     if(pLastNodeInList != nullptr)
         pLastNodeInList->right = pCurrent;
     pLastNodeInList = pCurrent;

@@ -4,8 +4,7 @@
 我们就可以一边遍历一边判断每个结点是不是平衡的。下面是这种思路的参考代码：
 */
 
-bool IsBalanced(BinaryTreeNode* pRoot, int* pDepth)
-{
+bool IsBalanced(BinaryTreeNode* pRoot, int* pDepth) {
     if(pRoot == NULL) {
         *pDepth = 0;
         return true;
@@ -27,7 +26,6 @@ bool IsBalanced(BinaryTreeNode* pRoot) {
     int depth = 0;
     return IsBalanced(pRoot, &depth);
 }
-
 
 template<typename T>
 int get_height(const shared_ptr<BinaryTree<T>> &node){
