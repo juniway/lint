@@ -1,18 +1,14 @@
 #include <stdio.h>
 
-
-
 /* 
 * Bubble Sort
 * O(n^2)
 */
 void bubbleSort(int a[], int n){
-  int i, j, temp;
-
-  for (i = (n-1); i >= 0; i--){
-    for (j = 1; j <= i; j++){
+  for (int i = n-1; i >= 0; i--){
+    for (int j = 1; j <= i; j++){
       if (a[j-1] > a[j]){
-        temp = a[j-1];
+        int temp = a[j-1];
         a[j-1] = a[j];
         a[j] = temp;
       }
@@ -46,15 +42,14 @@ void selection_sort(int a[], int n){
 // worst case:		O(n^2)
 void insertion_sort(int a[], int n){
     int i, j, index;
-    
     for (i = 1; i < n; i++){
         index = a[i];
-        j = i;
-        while ((j>0)&&(a[j-1] > index)){
-            a[j]=a[j-1];
-            j=j-1;
+        j = i - 1;
+        while (j > 0 && a[j] > index){
+            a[j + 1] = a[j];
+            j--;
         }
-        a[j]=index;
+        a[j + 1] = index;
     }
 }
 
@@ -125,17 +120,42 @@ void print_result(int a[], int n){
     printf("\n");
 }
 
+void test_data(void(f)(int*, int)) {
+    int ilist [][10] = {
+        {4, 65, 2, -31, 0, 99, 2, 83, 782, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+    };
+
+    int n = sizeof ilist / sizeof ilist[0];
+    for (int i = 0; i < n; i++) {
+        f(ilist[i], 10);
+        print_result(ilist[i], 10);
+    }
+}
+
+void bubble(int a[], int n) {
+    for (int i = n - 1; i > 0; i--) {
+        for (int j = 0; j < i; j++){
+            if(a[j] > a[j+1]) {
+                int tmp = a[j];
+                a[j] = a[j+1];
+                a[j+1] = tmp;
+            }
+        }
+    }
+}
+
 
 int main () {
     int a[] = {4, 65, 2, -31, 0, 99, 2, 83, 782, 1};
-    int b[] = {4, 65, 2, -31, 0, 99, 2, 83, 782, 1};
     int n = sizeof a / sizeof a[0];
-    insertion_sort(b, n);
-    print_result(b, n);
-    
-    heap_sort(a, n);
+    insertion_sort(a, n);
     print_result(a, n);
-
+    
+    // heap_sort(a, n);
+    // print_result(a, n);
+    // test_data(bubbleSort);
+    // test_data(bubble);
     
     return 0;
 }

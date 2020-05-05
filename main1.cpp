@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <vector>
 #include <map>
@@ -14,40 +13,40 @@ using namespace std;
 
 // void quicksort(int A[], int begin, int end){
 
-// 	int i = begin, j = end;
-// 	if (i > j) return;
+//  int i = begin, j = end;
+//  if (i > j) return;
 
-// 	while(i < j){
-// 		while(a[j] > a[end] && j > i){
-// 			--j;
-// 		}
-// 		while(a[i] < a[end] && i > j){
-// 			++i;
-// 		}
-// 		if(i < j)
-// 			swap(a[i], a[j]);
-// 	}
+//  while(i < j){
+//      while(a[j] > a[end] && j > i){
+//          --j;
+//      }
+//      while(a[i] < a[end] && i > j){
+//          ++i;
+//      }
+//      if(i < j)
+//          swap(a[i], a[j]);
+//  }
 
-// 	int temp = a[end];
-// 	a[end] = a[i];
-// 	a[i] = temp;
+//  int temp = a[end];
+//  a[end] = a[i];
+//  a[i] = temp;
 
-// 	quicksort(A, begin, i - 1);
-// 	quicksort(A, i + 1, end);
+//  quicksort(A, begin, i - 1);
+//  quicksort(A, i + 1, end);
 // }
 
 // void Partition(int A[], int start, int end){
-// 	if(A == nullptr || start > end) return;
-// 	int index = start - 1;
-// 	for(int i = start; i < end - 1; ++i){
-// 		if(A[i] < A[end]){
-// 			++index;
-// 			if(index != i)
-// 				Swap(A[index], A[i]);
-// 		}
-// 	}
+//  if(A == nullptr || start > end) return;
+//  int index = start - 1;
+//  for(int i = start; i < end - 1; ++i){
+//      if(A[i] < A[end]){
+//          ++index;
+//          if(index != i)
+//              Swap(A[index], A[i]);
+//      }
+//  }
 
-// 	return ++index;
+//  return ++index;
 // }
 
 // same as remove duplicate
@@ -58,91 +57,91 @@ using namespace std;
 //     int index = 2;
 //     for(int i = 2; i < n; ++i){
 //         if(A[index - 2] == A[i])
-//         	A[index++] = A[i];
+//          A[index++] = A[i];
 //     }
 // }
 template <typename T>
 void print(const vector<T>& A){
-	for(auto &i: A){
-		cout << i << " ";
-	}
-	cout << endl;
+    for(auto &i: A){
+        cout << i << " ";
+    }
+    cout << endl;
 }
 
 // Given a center, either one letter or two letter,
 // Find longest palindrome
 string longestpal_at_pos(string s, int begin, int end) {
-	while (begin >= 0 && end <= (int)s.length() - 1 && s[begin] == s[end]) {
-		begin--;
-		end++;
-	}
-	return s.substr(begin + 1, end - begin - 1);
+    while (begin >= 0 && end <= (int)s.length() - 1 && s[begin] == s[end]) {
+        begin--;
+        end++;
+    }
+    return s.substr(begin + 1, end - begin - 1);
 }
 
 
 string longestPalindrome(string s) {
-    	int n = s.length();
-    	if (n == 0) return "";
-    	if (n == 1) return s;
+        int n = s.length();
+        if (n == 0) return "";
+        if (n == 1) return s;
 
-    	string longest = s.substr(0, 1);
-    	for (int i = 0; i < n; i++) {
-    		// get longest palindrome with center of i
-    		string tmp = longestpal_at_pos(s, i, i); // odd
-    		if (tmp.length() > longest.length()) {
-    			longest = tmp;
-    		}
+        string longest = s.substr(0, 1);
+        for (int i = 0; i < n; i++) {
+            // get longest palindrome with center of i
+            string tmp = longestpal_at_pos(s, i, i); // odd
+            if (tmp.length() > longest.length()) {
+                longest = tmp;
+            }
 
-    		// get longest palindrome with center of i, i+1
-    		tmp = longestpal_at_pos(s, i, i + 1);
-    		if (tmp.length() > longest.length()) {
-    			longest = tmp;
-    		}
-    	}
+            // get longest palindrome with center of i, i+1
+            tmp = longestpal_at_pos(s, i, i + 1);
+            if (tmp.length() > longest.length()) {
+                longest = tmp;
+            }
+        }
 
-    	return longest;
+        return longest;
 }
 
 void bubblesort(vector<int>& A){
-	int n = A.size();
-	int count = 0;
-	bool swapped = false;
-	for(int i = 0; i < n; ++i){
-		for(int j = 1; j < n - i; ++j){
-			if(A[j - 1] > A[j]){
-				swap(A[j - 1], A[j]);
-				++count;
-				swapped = true;
-			}
-		}
-		if(!swapped) break;
-	}
-	cout << "count:" << count <<"|";
-	print(A);
+    int n = A.size();
+    int count = 0;
+    bool swapped = false;
+    for(int i = 0; i < n; ++i){
+        for(int j = 1; j < n - i; ++j){
+            if(A[j - 1] > A[j]){
+                swap(A[j - 1], A[j]);
+                ++count;
+                swapped = true;
+            }
+        }
+        if(!swapped) break;
+    }
+    cout << "count:" << count <<"|";
+    print(A);
 
 }
 
 void insertionsort(vector<int>& A){
-	int n = A.size();
-	for(int i = 0; i < n; ++i){
-		int j = i;
-		while(j > 0 && A[j] < A[j - 1]){
-			swap(A[j], A[j - 1]);
-			--j;
-		}
-	}
-	print(A);
+    int n = A.size();
+    for(int i = 0; i < n; ++i){
+        int j = i;
+        while(j > 0 && A[j] < A[j - 1]){
+            swap(A[j], A[j - 1]);
+            --j;
+        }
+    }
+    print(A);
 }
 
 void selectsort(vector<int>& A){
-	int n = A.size();
-	for(int i = 0; i < n; ++i){
-		for(int j = i; j < n; ++j){
-			if(A[j] < A[i])
-				swap(A[j], A[i]);
-		}
-	}
-	print(A);
+    int n = A.size();
+    for(int i = 0; i < n; ++i){
+        for(int j = i; j < n; ++j){
+            if(A[j] < A[i])
+                swap(A[j], A[i]);
+        }
+    }
+    print(A);
 }
 
 int myAtoi(string str) {
@@ -177,104 +176,104 @@ int myAtoi(string str) {
 bool isValid(string s) {
     stack<char> st;
     for(int i = 0; i < (int)s.length(); ++i){
-    	if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
-    		st.push(s[i]);
-    	}
-    	else{
-    		if(s[i] == ')' && st.top() != '(')
-    			return false;
-    		else if(s[i] == ']' && st.top() != '[')
-    			return false;
-    		else if(s[i] == '}' && st.top() != '{')
-    			return false;
-    		else
-    			st.pop();
-    	}
+        if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
+            st.push(s[i]);
+        }
+        else{
+            if(s[i] == ')' && st.top() != '(')
+                return false;
+            else if(s[i] == ']' && st.top() != '[')
+                return false;
+            else if(s[i] == '}' && st.top() != '{')
+                return false;
+            else
+                st.pop();
+        }
     }
     return st.empty();
 }
 
 void NextPermutation(vector<int> &A){
-	int n = A.size();
-	int k = n - 1;
-	while(k > 0){
-		if(A[k - 1] < A[k]) break;
-		k--;
-	}
-	if(k == 0){
-		for(int i = 0, j = n - 1; i < j; i++, j--){
-			swap(A[i], A[j]);
-		}
-	}
+    int n = A.size();
+    int k = n - 1;
+    while(k > 0){
+        if(A[k - 1] < A[k]) break;
+        k--;
+    }
+    if(k == 0){
+        for(int i = 0, j = n - 1; i < j; i++, j--){
+            swap(A[i], A[j]);
+        }
+    }
 
-	// scan from the end of the vector<>,
-	// and swap the smallest element that are greater than A[k-1]
-	int s = n - 1;
-	for(; s >= k; s--){
-		if(A[s] > A[k-1]){
-			swap(A[s], A[k-1]);
-			break;
-		}
-	}
+    // scan from the end of the vector<>,
+    // and swap the smallest element that are greater than A[k-1]
+    int s = n - 1;
+    for(; s >= k; s--){
+        if(A[s] > A[k-1]){
+            swap(A[s], A[k-1]);
+            break;
+        }
+    }
 
-	// sort the remaining A[k] to A[n-1]
-	sort(A.begin() + k, A.end());
+    // sort the remaining A[k] to A[n-1]
+    sort(A.begin() + k, A.end());
 }
 
 string longestcommonprefix(vector<string>& strs){
-	int n = strs.size();
-	if(n == 0) return string();
+    int n = strs.size();
+    if(n == 0) return string();
 
-	for(int i = 0; i < (int)strs[0].size(); ++i){
-		for(int j = 1; j < n; ++j){
-			if(i == (int)strs[j].size() || strs[0][i] != strs[j][i]){
-				return strs[0].substr(0, i);
-			}
-		}
-	}
-	return strs[0];
+    for(int i = 0; i < (int)strs[0].size(); ++i){
+        for(int j = 1; j < n; ++j){
+            if(i == (int)strs[j].size() || strs[0][i] != strs[j][i]){
+                return strs[0].substr(0, i);
+            }
+        }
+    }
+    return strs[0];
 }
 
 // bool isMatch(const char *s, const char *p){
-// 	if(p == nullptr)
-// 		return s == nullptr;
-// 	if(*(p+1) == '*'){
-// 		return isMatch(s, p+2) || (*p == '.' && *s != '\0' || *p == *s) && isMatch(s + 1, p);
-// 	}
-// 	if(*p == '.')
-// 		return *s && isMatch(s+1, p + 1);
-// 	return *s == *p && isMatch(s + 1, p + 1);
+//  if(p == nullptr)
+//      return s == nullptr;
+//  if(*(p+1) == '*'){
+//      return isMatch(s, p+2) || (*p == '.' && *s != '\0' || *p == *s) && isMatch(s + 1, p);
+//  }
+//  if(*p == '.')
+//      return *s && isMatch(s+1, p + 1);
+//  return *s == *p && isMatch(s + 1, p + 1);
 // }
 
 // string getsubpal(string& str, int begin, int end){
-// 	while(begin >= 0 && end < str.length() && str[begin - 1] == str[end + 1]){
-// 		begin--;
-// 		end++;
-// 	}
-// 	return str.substr(being + 1, end - begin - 1);
+//  while(begin >= 0 && end < str.length() && str[begin - 1] == str[end + 1]){
+//      begin--;
+//      end++;
+//  }
+//  return str.substr(being + 1, end - begin - 1);
 // }
 
 // string longestPalindrome(string& str){
-// 	int n = str.length();
-// 	if(n == 0) return string();
-// 	if(n == 1) return str;
+//  int n = str.length();
+//  if(n == 0) return string();
+//  if(n == 1) return str;
 
-// 	string result;
-// 	for(int i = 0; i < n; ++i){
-// 		string longestpal = str[0];
-// 		string tmp = getsubpal(str, i, i);
-// 		longestpal = max(longestpal.length(), tmp.length());
+//  string result;
+//  for(int i = 0; i < n; ++i){
+//      string longestpal = str[0];
+//      string tmp = getsubpal(str, i, i);
+//      longestpal = max(longestpal.length(), tmp.length());
 
-// 		tmp = getsubpal(str, i, i + 1));
-// 		longestpal = max(longestpal.length(), tmp.length());
-// 	}
+//      tmp = getsubpal(str, i, i + 1));
+//      longestpal = max(longestpal.length(), tmp.length());
+//  }
 
-// 	return result
+//  return result
 // }
 
 
 bool isMatchWildCard(const string& w, const string& s){
-	int m = w.length(), n = s.length();
+    int m = w.length(), n = s.length();
     int pos = 0;
     while(pos < m && pos < n && (w[pos] == '?' || w[pos] == s[pos]))
         ++pos;
@@ -293,7 +292,7 @@ bool isMatchWildCard(const string& w, const string& s){
 #define DELIM "."
 
 bool valid_digit(char *ip_str){
-	char *p = ip_str;
+    char *p = ip_str;
     while (*p) {
         if (*p >= '0' && *p <= '9')
             ++p;
@@ -358,18 +357,18 @@ void getNext(vector<int> &next, string &needle) {
     next[i] = j;
     while (i < n) {
         while (j != -1 && needle[i] != needle[j])
-        	j = next[j];
+            j = next[j];
         ++i; ++j;
         //特殊情况，这里即为优化之处。考虑下AAAAB, 防止4个A形成0123在匹配时多次迭代。
         // if (needle[i] == needle[j])
-        // 	next[i] = next[j];
+        //  next[i] = next[j];
         // else
-        	next[i] = j;
+            next[i] = j;
     }
 }
 
 int strStr(string haystack, string needle) {
-	int n = haystack.length(), m = needle.length();
+    int n = haystack.length(), m = needle.length();
 
     if (haystack.empty()) return needle.empty() ? 0 : -1;
     if (needle.empty()) return 0;
@@ -394,20 +393,20 @@ int strStr(string haystack, string needle) {
 //     }
 
 // private:
-// 	// start，开始的数, cur，已经选择的数目
-// 	static void dfs(int n, int k, int start, int cur,
-// 	vector<int> &path, vector<vector<int> > &result){
-// 		if (cur == k){
-// 			cout << cur << endl;
-// 			result.push_back(path);
-// 		}
+//  // start，开始的数, cur，已经选择的数目
+//  static void dfs(int n, int k, int start, int cur,
+//  vector<int> &path, vector<vector<int> > &result){
+//      if (cur == k){
+//          cout << cur << endl;
+//          result.push_back(path);
+//      }
 
-// 		for (int i = start; i <= n; ++i){
-// 			path.push_back(i);
-// 			dfs(n, k, i + 1, cur + 1, path, result);
-// 			path.pop_back();
-// 		}
-// 	}
+//      for (int i = start; i <= n; ++i){
+//          path.push_back(i);
+//          dfs(n, k, i + 1, cur + 1, path, result);
+//          path.pop_back();
+//      }
+//  }
 // };
 
 class Solution {
@@ -436,20 +435,20 @@ private:
 };
 
 // void permute(string select, string remain, vector<string> &result){
-// 	// int n = remain.size();
-// 	if(remain == ""){
-// 		result.push_back(select);
-// 		return;
-// 	}
+//  // int n = remain.size();
+//  if(remain == ""){
+//      result.push_back(select);
+//      return;
+//  }
 
-// 	for(int i = 0; remain[i] != '\0'; ++i){
-// 		string wk(remain);
-// 		permute(select + remain[i], remain.erase(i, 1), result);
-// 	}
+//  for(int i = 0; remain[i] != '\0'; ++i){
+//      string wk(remain);
+//      permute(select + remain[i], remain.erase(i, 1), result);
+//  }
 // }
 
 // int MostFrequentValue(vector<int> A) {
-// 	int n = A.size();
+//  int n = A.size();
 //     int maxKey = 0;
 //     int maxCounts = 0;
 
@@ -486,13 +485,13 @@ private:
 //     int cnt = 0;
 //     int i;
 //     for(i = 0; i < n; i++){
-// 	    if(A[i] == candidate)
-// 	        ++cnt;
+//      if(A[i] == candidate)
+//          ++cnt;
 //     }
 //     if(cnt > n/2)
-//     	return 1;
+//      return 1;
 //     else
-//     	return 0;
+//      return 0;
 // }
 
 // [
@@ -520,7 +519,7 @@ int minimumTotal(vector<vector<int> > &triangle) {
 }
 
 int firstMissingPositive(vector<int>& A) {
-	int n = A.size();
+    int n = A.size();
     int i=0;
     while(i < n) {
         if(A[i] > 0 && A[i] <= n && A[i] != i+1 && A[i] != A[A[i] - 1])
@@ -537,23 +536,23 @@ int firstMissingPositive(vector<int>& A) {
 }
 
 // int triangleMin(vector<int> &A){
-// 	int row = A.size();
-// 	if(row == 0) return 0;
+//  int row = A.size();
+//  if(row == 0) return 0;
 
-// 	vector<int> minV((int)A[row - 1].size(), 0);
-// 	for(int i = row - 1; i >= 0; --i){
-// 		int col = A[i].size();
-// 		for(int j = 0; j < col; ++j){
-// 			if(i == row - 1) minV[j] = A[i][j];
-// 			else
-// 				minV[j] = min(minV[j], minV[j+1]) + A[i][j];
-// 		}
-// 	}
-// 	return minV[0];
+//  vector<int> minV((int)A[row - 1].size(), 0);
+//  for(int i = row - 1; i >= 0; --i){
+//      int col = A[i].size();
+//      for(int j = 0; j < col; ++j){
+//          if(i == row - 1) minV[j] = A[i][j];
+//          else
+//              minV[j] = min(minV[j], minV[j+1]) + A[i][j];
+//      }
+//  }
+//  return minV[0];
 // }
 
 string minWindow(string S, string T) {
-		int n1 = S.length(), n2 = T.length();
+        int n1 = S.length(), n2 = T.length();
         if (n1 == 0 || n2 == 0) return "";
 
         int count = T.size();
@@ -576,7 +575,7 @@ string minWindow(string S, string T) {
                     count--;
             }
             else{
-            	int currentLen = i - j + 1;
+                int currentLen = i - j + 1;
                 if (currentLen < minLen){
                     minLen = currentLen;
                     minIdx = j;
@@ -613,7 +612,7 @@ public:
             return;
         }
         for(int i = start; i < n; ++i){
-        	if(i > 0 && A[i] == A[i - 1]) continue;
+            if(i > 0 && A[i] == A[i - 1]) continue;
             swap(A[start], A[i]);
             permuteUnique(A, start + 1, res, st);
             swap(A[start], A[i]);
@@ -656,10 +655,10 @@ public:
     bool isValid(int irow, int icol, vector<int> &col){
         for(int i = 0; i < irow; ++i){
             if(icol == col[i] || abs(irow - i) == abs(icol - col[i])) {
-            	cout << "i = " << i << ", col[i] = " << col[i] << endl;
-            	cout <<"icol = " << icol << endl;
-            	cout << "irow - i = " << irow - i << ", icol - col[i] = " << icol - col[i] << endl;
-            	return false;
+                cout << "i = " << i << ", col[i] = " << col[i] << endl;
+                cout <<"icol = " << icol << endl;
+                cout << "irow - i = " << irow - i << ", icol - col[i] = " << icol - col[i] << endl;
+                return false;
             }
         }
         return true;
@@ -673,7 +672,7 @@ public:
 
         std::sort(strs.begin(), strs.end()); //
         for(auto& e: strs){
-        	cout << e << ",";
+            cout << e << ",";
         }
         cout << endl;
 
@@ -829,94 +828,94 @@ public:
 // ==============================================================================================
 
 int main(){
-	// vector<int> vec = {1, 2, 3, 3, 5, 6, 6, 6};
-	// findDistinct(vec);
+    // vector<int> vec = {1, 2, 3, 3, 5, 6, 6, 6};
+    // findDistinct(vec);
 
-	// string s{"abcbe"};
-	// string res = longestPalindrome(s);
+    // string s{"abcbe"};
+    // string res = longestPalindrome(s);
 
-	// vector<int> vec1 = {7, 9, -1, 19, 6, 11, 2, 22, 8, 4};
-	// vector<int> vec2 = {1, 2, 3, 4, 7, 11, 13, 14, 19, 22};
-	// vector<int> vec3 = {22, 18, 15, 7, 6, 4, 3, 2, 1, 0};
-	// bubblesort(vec1);
-	// bubblesort(vec2);
-	// bubblesort(vec3);
-	// myAtoi(s);
+    // vector<int> vec1 = {7, 9, -1, 19, 6, 11, 2, 22, 8, 4};
+    // vector<int> vec2 = {1, 2, 3, 4, 7, 11, 13, 14, 19, 22};
+    // vector<int> vec3 = {22, 18, 15, 7, 6, 4, 3, 2, 1, 0};
+    // bubblesort(vec1);
+    // bubblesort(vec2);
+    // bubblesort(vec3);
+    // myAtoi(s);
 
-	// Solution sol;
-	// string s = "";
-	// vector<string> result = sol.letterCombinations(s);
-	// std::cout << std::noboolalpha << f << std::boolalpha << t << std::endl;
-	// vector<int> permu = {7, 8, 6, 9, 8, 7, 2};
-	// NextPermutation(permu);
-	// print(permu);
+    // Solution sol;
+    // string s = "";
+    // vector<string> result = sol.letterCombinations(s);
+    // std::cout << std::noboolalpha << f << std::boolalpha << t << std::endl;
+    // vector<int> permu = {7, 8, 6, 9, 8, 7, 2};
+    // NextPermutation(permu);
+    // print(permu);
 
-	// string w = "c*a*b", s = "aab";
-	// cout << std::boolalpha << isMatchWildCard(w, s) << endl;
+    // string w = "c*a*b", s = "aab";
+    // cout << std::boolalpha << isMatchWildCard(w, s) << endl;
 
-	// char ip[][20] = {"192.168.1.", "192.168.1.1", "01.3.1.1"};
-	// int i = -1;
-	// while(i++<2){
-	// 	cout << ip[i] << ": ";
-	// 	cout << std::boolalpha << is_valid_ip(ip[i]) << endl;
-	// }
+    // char ip[][20] = {"192.168.1.", "192.168.1.1", "01.3.1.1"};
+    // int i = -1;
+    // while(i++<2){
+    //  cout << ip[i] << ": ";
+    //  cout << std::boolalpha << is_valid_ip(ip[i]) << endl;
+    // }
 
-	// string s = "ABCD BABCDABD";
-	// string p = "ABCDABD";
-	// strStr(s, p);
+    // string s = "ABCD BABCDABD";
+    // string p = "ABCDABD";
+    // strStr(s, p);
 
-	// Solution s;
-	// vector<vector<int>> v =	s.combine(4, 2);
+    // Solution s;
+    // vector<vector<int>> v =  s.combine(4, 2);
 
-	// for(auto &e:v){
-	// 	cout << "[";
-	// 	for(auto &e1:e){
-	// 		cout << e1;
-	// 	}
-	// 	cout <<"]\n";
-	// }
-	// cout << endl;
+    // for(auto &e:v){
+    //  cout << "[";
+    //  for(auto &e1:e){
+    //      cout << e1;
+    //  }
+    //  cout <<"]\n";
+    // }
+    // cout << endl;
 
-	// Solution s;
-	// vector<int> v = {1, 1, 2, 5, 6, 7, 10};
-	// vector<vector<int>> res = s.combinationSum2(v, 8);
+    // Solution s;
+    // vector<int> v = {1, 1, 2, 5, 6, 7, 10};
+    // vector<vector<int>> res = s.combinationSum2(v, 8);
 
-	// string abc = "abc";
-	// string str = "";
-	// vector<string> result;
-	// permute(str, abc, result);
-	// for(auto &e: result){
-	// 	cout << e;
-	// }
-	// cout << endl;
+    // string abc = "abc";
+    // string str = "";
+    // vector<string> result;
+    // permute(str, abc, result);
+    // for(auto &e: result){
+    //  cout << e;
+    // }
+    // cout << endl;
 
-	// vector<int> A = {2, 2, 2, 2, 3, 3, 3, 6, 6, 6, 6, 6};
-	// cout << MostFrequentValue(A) << endl;
+    // vector<int> A = {2, 2, 2, 2, 3, 3, 3, 6, 6, 6, 6, 6};
+    // cout << MostFrequentValue(A) << endl;
 
 
-	// vector<int> A = {-2, -3, -1, 0, 2, 3, 4};
-	// cout << firstMissingPositive(A) << endl;
+    // vector<int> A = {-2, -3, -1, 0, 2, 3, 4};
+    // cout << firstMissingPositive(A) << endl;
 
-	// vector<vector<int>> A = {{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}};
-	// cout << minimumTotal(A) << endl;
-	// string S = "ADOBECODEBANC";
-	// string T = "ABC";
-	// cout << minWindow(S, T) << endl;
+    // vector<vector<int>> A = {{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}};
+    // cout << minimumTotal(A) << endl;
+    // string S = "ADOBECODEBANC";
+    // string T = "ABC";
+    // cout << minWindow(S, T) << endl;
 
-	// vector<int> A = {1, 1};
-	// Solution_1 s;
-	// vector<vector<int>> res = s.permuteUnique(A);
-	// for(auto &e:res){
-	// 	print(e);
-	// }
-	// cout << endl;
+    // vector<int> A = {1, 1};
+    // Solution_1 s;
+    // vector<vector<int>> res = s.permuteUnique(A);
+    // for(auto &e:res){
+    //  print(e);
+    // }
+    // cout << endl;
 
-	// Solution2 s2;
-	// s2.solveNQueens(4);
+    // Solution2 s2;
+    // s2.solveNQueens(4);
 
-	// vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-	// Solution3 s3;
-	// s3.groupAnagrams(strs);
+    // vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    // Solution3 s3;
+    // s3.groupAnagrams(strs);
 
     // vector<int> input = {-14,-10,-1,8,-8,-7,-3,-2,14,10,3,3,-1,-15,6,9,-1,6,-2,-6,-8,-15,8,-3,-14,5,-1,-12,-10,-5,-9,-8,1,-3,-15,0,-3,-11,6,-11,7,-6,7,-9,-6,-10,7,1,11,-10,10,-12,-10,3,-7,-9,-7,7,-14,-9,10,14,-2,-4,-4,-10,3,1,-14,-6,5,8,-4,-11,14,-3,-6,-2,13,13,3,0,-14,8,10,-14,6,11,1,7,-13,-4,6,0,-1,10,-3,-13,-4,-2,-11,8,-8};
     // vector<int> input = {0, 0, 0};

@@ -20,7 +20,6 @@
  }
 
  int main(){
-
      uint32_t ipAddress = parseIPV4string(ipAddressString);
      uint32_t netmask = parseIPV4string(netMaskString);
      uint32_t subnet = parseIPV4string(subnetString);

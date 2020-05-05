@@ -1,16 +1,19 @@
+#include <string>
+
+using namespace std;
 
 class Solution {
     string validIPAddress(string IP) {
         if (IP == NULL || IP.length()==0) return "Neither";
-        boolean isIP4 = checkIP4(IP);
-        boolean isIP6 = checkIP6(IP);
+        bool isIP4 = checkIP4(IP);
+        bool isIP6 = checkIP6(IP);
         if (isIP4) return "IPv4";
         if (isIP6) return "IPv6";
         return "Neither";
     }
 
     bool checkIP4(string IP) {
-        if (IP.charAt(IP.length()-1) == '.') return false;
+        if (IP.[IP.length()-1] == '.') return false;
         auto numbers = IP.split("\\.");
         if (numbers==null || numbers.length!=4) return false;
         for (String str : numbers) {

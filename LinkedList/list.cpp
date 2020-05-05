@@ -1,206 +1,58 @@
+#include "list.hpp"
 #include <iostream>
-#include <vector>
 
-using namespace std;
+using std::cout;
 
-struct Node {
-    int data;
-    Node *next;
-    Node() {}
-    Node(int v) : data(v) {}
-};
-
-class List {
-public:
-    Node *head;
-    int len;
-	List(Node *root):head(root) {}
-
-	void PrintList();
-	void Reverse();
-	Node* Middle();
-    bool IsLoop();
-    bool IsLoop1();
-};
-
-// create a list with random nodes: from rightmost to leftmost
-List* CreateList(int len) {
-    srand(time(NULL));
-    Node *p = nullptr, *pre = nullptr;
-    for (int i = 0; i < len; i++) {
-        p = new Node();
-        p->data = rand() % 100 + 1; //随机数
-        p->next = pre;
-        pre = p;
+ListNode* Create(int n, int(f)(int)) {
+    ListNode dummy;
+    ListNode *cur = &dummy;
+    for(int i = 0; i < n; ++i) {
+        ListNode *tmp = new ListNode(f(i));
+        cur->next = tmp;
+        cur = tmp;
     }
-
-	if (p == nullptr) return nullptr;
-
-	List *l = new List(p);
-	l->len = len;
-
-	return l;
+    return dummy.next;
 }
 
-void List::PrintList() {
-    Node *h = this->head;
-    for(int i = 0; i < this->len; ++i) {
-        cout << h->data << "->";
-        h = h->next;
-    }
-
-    cout << "null" << endl;
+void Push(ListNode **head_ref, int data) {
+    ListNode *node = new ListNode(data);
+    node->next = *head_ref;
+    *head_ref = node;
 }
 
-void List::Reverse() {
-    Node *pre = nullptr, *p = this->head;
-
-    while (p && p->next) {
-        Node *tmp = p->next;
-        p->next = pre;
-        pre = p;
-        p = tmp;
-    }
-    this->head = p;
-    p->next = pre;
-}
-
-Node* List::Middle() {
-	Node *first, *second;
-	first = second = this->head;
-	while(first != nullptr && second != nullptr && second->next != nullptr) {
-		first = first->next;
-		second = second->next->next;	
-	}
-
-	return first;
-}
-
-// (1) Floyd cycle finding algorithm
-// Aka the tortoise and hare algorithm
-bool List::IsLoop() {
-    Node *slow, *fast;
-    slow = fast = this->head;
-
-    while(slow && fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if(slow == fast)
-            return true;
-    }
-
-    return false;
-}
-
-List* CreateLoopList() {
-    Node *p1 = new Node(3);
-    p1->next = nullptr;
-
-    Node *p2 = new Node(4);
-    p2->next = p1;
-
-    Node *p3 = new Node(5);
-    p3->next = p2;
-
-    Node *p4 = new Node(6);
-    p4->next = p3;
-
-    Node *p5 = new Node(6);
-    p5->next = p4;
-
-    Node *p6 = new Node(7);
-    p6->next = p5;
-
-    p1->next = p4;
-
-    List *l = new List(p6);
-    l->len = 6;
-    return l;
-}
-
-List* CreateLoopList1(int len) {
-    srand(time(NULL));
-    Node *p = nullptr, *pre = nullptr;
-
-    Node *tail = nullptr;
-    int pos = rand()%len;
-    for (int i = 0; i < len; i++) {
-        p = new Node();
-        p->data = rand() % 100 + 1; //随机数
-        p->next = pre;
-        if(pre == nullptr) tail = p;
-        pre = p;
-
-        if (i == pos) tail->next = p;
-    }
-
-	if (p == nullptr) return nullptr;
-
-
-	List *l = new List(p);
-	l->len = len;
-
-	return l;
-}
-// (2) Better than Floyd's algorithm
-// https://stackoverflow.com/questions/2663115/how-to-detect-a-loop-in-a-linked-list
-bool List::IsLoop1(){
-    if(this->head == nullptr) return false;
-
-    Node *slow, *fast;
-    slow = fast = this->head;
-
-    int taken = 0, limit = 2;
-    while (fast->next != nullptr) {
-        fast = fast->next;
-        taken++;
-        if(slow == fast) return true;
-
-        if(taken == limit){
-            taken = 0;
-            limit <<= 1;    // equivalent to limit *= 2;
-            slow = fast;    // teleporting the turtle (to the hare's position) 
+void Delete(ListNode **head_ref, int key) {
+    ListNode *pre, *cur;
+    pre = cur = *head_ref;
+    while(true) {
+        if(cur->data != key) {
+            // pre = cur;
+            // cur = cur->next;
         }
     }
-    return false;
-}
 
-vector<List*> genMultiList(int cnt) {
-    vector<List*> vl;
-    srand(time(NULL));
-    for (int i = 0; i < cnt; ++i) {
-        vl.push_back(CreateList(rand()%10+1));
-    }
-    return vl;
-}
-
-int main() {
-	List *l = CreateList(4);
-	l->PrintList();
-	l->Reverse();
-	l->PrintList();
-	Node *mid = l->Middle();
-	cout << "middle: " << mid->data << endl;
-
-    cout << "==========================================" << endl;
-    cout << endl;
-    vector<List*> vl = genMultiList(5);
-    for (auto &i:vl) {
-        i->PrintList();
-        cout << "mid: " << i->Middle()->data << endl;
+    if(cur != nullptr) {
+        pre->next = cur->next;
+        delete cur;
     }
 
-    cout << "==========================================" << endl;
-
-    List *ll = CreateLoopList();
-    ll->PrintList();
-    cout << "loop: " << ll->IsLoop() << endl;
-
-    List *ll2 = CreateLoopList1(5);
-    ll2->PrintList();
-    cout << "loop: " << ll2->IsLoop() << endl;
-
-    l->PrintList();
-    cout << "loop: " << l->IsLoop() << endl;
 }
+
+void Destroy(ListNode **head) { // 用二级指针的目的是用于验证链表确实被删除，因为一旦删除之后，head 返回出去就是 nullptr
+    ListNode *cur = *head;
+    while(cur != nullptr) {
+        ListNode *tmp = cur->next;
+        delete cur;
+        cur = tmp;
+    }
+    *head = cur;
+}
+
+
+void PrintList(ListNode *head) {
+    while(head != nullptr) {
+        std::cout << head->data << " ";
+        head=head->next;
+    }
+    std::cout << "\n";
+}
+

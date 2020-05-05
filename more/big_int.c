@@ -4,8 +4,7 @@
 #include <math.h>
 
 
-// 大整数都是通过 char 数组来实现的。
-// 关键是实现手动的进位
+// we need to handle carry manually and carefully
 char* add_big_int(char* num1, char* num2){
 	int carry = 0;
 	int i = strlen(num1) - 1;
@@ -13,12 +12,12 @@ char* add_big_int(char* num1, char* num2){
 	int max_len = i > j ? (i + 1) : (j + 1);
 
 	char* result = (char*)malloc(max_len + 1); // save result
-	if(result = NULL) return -1;
+	if(result == NULL) return NULL;
 	result[max_len] = '\0';
 
-	int k = strlen(v) - 1;
-	while((i >= 0) && (j >= 0)){
-		int val = (num[i] - '0') + (num2[j] - '0');
+	int k = strlen(num1) - 1;
+	while(i >= 0 && j >= 0){
+		int val = (num1[i] - '0') + (num2[j] - '0');
 		result[k] = (val + carry) % 10 + '0';
 		carry = val / 10;
 		--i;
@@ -38,7 +37,7 @@ char* add_big_int(char* num1, char* num2){
 		carry = (num2[j] - '0' + carry) / 10;
 		--j;
 		--k;
-	}
+	 }
 	result[0] = carry + '0';
 
 	if(result[0] != '0') // 如果结果最高位不等于0， 则直接输出结果

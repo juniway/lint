@@ -1,18 +1,9 @@
 #include <iostream>
-#include "common.h"
-
-using namespace std;
-
-void Print(ListNode *p) {
-    while(p != nullptr) {
-        cout << p->data << " " ;
-        p = p->next;
-    }
-    cout << endl;
-}
+#include <stack>
+#include "list.hpp"
 
 // 要点是：使用 prev 和 cur 两个游标
-ListNode* ReverseLinkedList(ListNode *root) {
+ListNode* ReverseList(ListNode *root) {
     ListNode *head = root;
     ListNode *prev = root;
     ListNode *tmp = root->next;
@@ -26,17 +17,17 @@ ListNode* ReverseLinkedList(ListNode *root) {
     return prev;
 }
 
-ListNode* ReverseList(ListNode* pHead){
+ListNode* ReverseList1(ListNode* pHead){
     ListNode* pReversedHead = nullptr;
     ListNode* pNode = pHead;
     ListNode* pPrev = nullptr;
 
     while(pNode != nullptr){
-        ListNode* pNext = pNode->m_pNext;
+        ListNode* pNext = pNode->next;
         if(pNext == nullptr){
             pReversedHead = pNode;
         }
-        pNode->m_pNext = pPrev;
+        pNode->next = pPrev;
         pPrev = pNode;
         pNode = pNext;
     }
@@ -44,11 +35,11 @@ ListNode* ReverseList(ListNode* pHead){
     return pReversedHead;
 }
 
-ListNode* ReversedList(ListNode* pHead){
+ListNode* ReversedList2(ListNode* pHead){
     std::stack<ListNode*> st;
     while(pHead != nullptr){
         st.push(pHead);
-        pHead = pHead->m_pNext;
+        pHead = pHead->next;
     }
 
     pHead = st.top();
@@ -64,28 +55,49 @@ ListNode* ReversedList(ListNode* pHead){
     }
 }
 
-// 创建一条长度为 N 的链表，技巧是：在头部建一个 fake head。
-extern Node* CreateLinkedList();
-// Node* CreateLinkedList() {
-//     Node *dummy = new Node();
-//     Node *prev = dummy;
-//     for (int i = 0; i < 10; ++i) {
-//         Node *pNode = new Node();
-//         pNode->data = i;
-//         pNode->next = nullptr;
-//         prev->next = pNode;
-//         prev = pNode;
-//     }
-//     prev = dummy->next;
-//     delete dummy;
-//     return prev;
-// }
+void Reverse(ListNode **head_ref) {
+    ListNode *result = nullptr;
+    ListNode *cur = *head_ref;
+    ListNode *next = cur;
+
+    while(cur != nullptr) {
+        next = cur->next;
+        cur->next = result;
+        result = cur;
+        cur = next;
+    }
+
+    *head_ref = result;
+}
+
+void Reverse2(ListNode **head_ref) {
+    ListNode *result = nullptr;
+    ListNode *cur = *head_ref;
+    while (cur != nullptr) {
+        MoveNode(&result, &cur);
+    }
+
+    *head_ref = result;
+}
+
+// Back-Middle-Front strategy
+// nullptr 1 -> 2 -> 3
+//  back  mid  front
+void Reverse3(ListNode **head_ref) {
+    if (*head_ref != nullptr) {
+        ListNode *mid = *head_ref;
+        ListNode *front = mid->next;
+        ListNode *back = nullptr;
+        while(true) {
+            mid->next = back;
+            if (front == nullptr) break;
+            back = mid;
+            mid = front;
+            front = front->next;
+        }
+        *head_ref = mid;
+    }
+}
 
 int main() {
-    Node* root = CreateLinkedList();
-    Print(root);
-    Node *res = ReverseLinkedList(root);
-    Print(res);
-    delete root;
-    delete res;
 }

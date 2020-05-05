@@ -106,6 +106,16 @@ int findkth(vector<int>& A, int left, int right, int k) {
     return -1;
 }
 
+void insertion_sort(const vector<int>& A) {
+    int n = A.size();
+    for(int i = 0; i < n-1;) {
+        for (int j = 0; j < n - i; j++) {
+            
+        }
+    }
+    
+}
+
 int main() {
     vector<int> arr = { 10, 9, 18, 5, 1, 7, 12, 8 };
     print(arr);

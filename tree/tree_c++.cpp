@@ -1,19 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <queue>
-#include <stack>
-
-using namespace std;
-
-class Node{
-public:
-    int item;
-    Node *left;
-    Node *right;
-
-    Node(int num) : item(num), left(nullptr), right(nullptr) {} // constructor
-    // Node(int num, Node *l = 0, Node *r = 0) : item(num), left(l), right(r) {} // constructor
-};
+#include "tree.hpp"
 
 // Basic operations
 // 1. traversal: inorder, preorder, postorder
@@ -22,51 +7,6 @@ public:
 // 4. delete
 // 5. parent node
 // 6. successor node
-
-class Tree{
-public:
-    Tree() { root = nullptr; }
-    Tree(Node *rt) : root(rt){}
-    void level();
-    void in_order();
-    void pre_order();
-    void post_order();
-    void pre_order1();
-    void del_node(Node*);
-
-    // void inorder() { inorder(root);  }
-    void insert(int num){ insert(root, num); }
-    Node* search(int num);
-    void del(Node* &);
-
-    int maximum(){ return maximum(root); }
-    int minimum() { return minimum(root); }
-    int successor(int);
-    Node* successor1(int);
-    Node* predecessor(int);
-    Node* parent(Node*) const;
-    int get_height();
-
-    bool symmetric();
-    Node *root;
-private:
-    Node* search(Node *m, int num);
-    void insert(Node *&, int num);      // CALL BY REFERENCE.
-    void inorder(Node *) const;         // in_order traversal
-    void visit(Node *p) const{
-        printf("%d\t", p->item);
-    }
-    void transplant(Node *u, Node *v){
-        Node *pa = parent(u);
-        if(pa == nullptr)
-            root = v;
-        else if (u == pa->left)
-            pa->left = v;
-        else pa->right = v;
-    }
-    int minimum(Node *);
-    int maximum(Node *);
-};
 
 Node* Tree::parent(Node* node) const { // return node's parent
     Node *tmp = root;
@@ -269,7 +209,7 @@ Node* Tree::search(int val) {
 
 Node* Tree::predecessor(int val) {
     Node *cur = this->root, *pre = nullptr;
-    while(cur && cur->item != val) {
+    while(cur != nullptr && cur->item != val) {
         if (cur->item > val) {
             cur = cur->left;
         } else {
@@ -278,7 +218,7 @@ Node* Tree::predecessor(int val) {
         }
     }
 
-    if (cur) {
+    if (cur != nullptr) { // if it is a leaf node
         cur = cur->left;
         while(cur) {
             pre = cur;
@@ -473,6 +413,48 @@ bool symmetric(Node *root) {
       return false;
 }
 
+void in_order1(Node *root) {
+    stack<Node*> st;
+    Node *cur = root;
+
+    while(!st.empty() || cur != nullptr) {
+        if (cur != nullptr) {
+            st.push(cur);
+            cur = cur->left;
+        } else {
+            cur = st.top();
+            cout << cur->item << endl;
+            st.pop();
+            cur = cur -> right;
+        }
+
+    }
+}
+
+void post_order1(Node *root) {
+    stack<Node*> st;
+    Node *cur = root;
+    Node *visited = root;
+
+    while( !st.empty() || cur != nullptr ) {
+        if(cur != nullptr) {
+            st.push(cur);
+            cur = cur -> left;
+        } else {
+            Node *tmp = st.top();
+            if (tmp->right != nullptr && visited != tmp->right){
+                cur = tmp -> right;
+            } else {
+                cout << tmp->item << " ";
+                visited = st.top();
+                st.pop();
+            }
+        }
+    }
+
+    cout << endl;
+}
+
 // test program
 int main(){
 
@@ -485,28 +467,35 @@ int main(){
     bst.insert(7);
     bst.insert(6);
     bst.insert(16);
-    int val = 12;
-    Node *p = bst.predecessor(val);
-    // bst.inorder();
-
-    bst.level();
-    cout << "predecessor of " << val << " is " << p->item << endl;
-    Node *p1 = bst.successor1(val);
-    cout << "successor of " << val << " is " << p1->item << endl;
-
-    // bst.pre_order();
-    // bst.pre_order1();
-    // bst.post_order();
-
-    // cout << "height => : " << getTreeHeight_Iterative(bst.root) << endl;
-
-    Tree *tr = gen_trees();
-    cout << boolalpha << tr->symmetric() << endl;
-    cout << boolalpha << symmetric(tr->root) << endl;
-
+    Node *p12 = bst.predecessor(12);
+    Node *p6 = bst.predecessor(6);
+    Node *p1 = bst.predecessor(1);
+    // // bst.inorder();
+    //
+    // bst.level();
+    cout << "predecessor of " << 12 << " is " << p12->item << endl;
+    cout << "predecessor of " << 6 << " is " << p6->item << endl;
+    // cout << "predecessor of " << 1 << " is " << p1->item << endl;
+    // Node *p1 = bst.successor1(val);
+    // cout << "successor of " << val << " is " << p1->item << endl;
+    //
+    // // bst.pre_order();
+    // // bst.pre_order1();
+    // // bst.post_order();
+    //
+    // // cout << "height => : " << getTreeHeight_Iterative(bst.root) << endl;
+    //
+    // Tree *tr = gen_trees();
+    // cout << boolalpha << tr->symmetric() << endl;
+    // cout << boolalpha << symmetric(tr->root) << endl;
+    //
     // Tree *tr1 = gen_trees1();
     // cout << boolalpha << tr1->symmetric() << endl;
     // cout << boolalpha << symmetric(tr1->root) << endl;
+    //
+    // in_order1(bst.root);
+    post_order1(bst.root);
+    bst.post_order();
 
     return 0;
 
