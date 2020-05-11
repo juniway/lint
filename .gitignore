@@ -1,5 +1,7 @@
-*.out
+*.out*
 */*.out
+*/*.out*
 *.exe
 .DS_Store
 */.DS_Store
+*/*.gch

@@ -1,1 +1,0 @@
-gdb --args ./testprg arg1 arg2

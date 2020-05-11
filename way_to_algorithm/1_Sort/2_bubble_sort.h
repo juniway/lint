@@ -1,4 +1,4 @@
-﻿#ifndef SORT_BUBBLE_SORT_H
+#ifndef SORT_BUBBLE_SORT_H
 #define SORT_BUBBLE_SORT_H 1
 //冒泡排序
 //bubble sort

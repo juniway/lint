@@ -1,4 +1,4 @@
-﻿#ifndef SORT_QUICK_SORT_H
+#ifndef SORT_QUICK_SORT_H
 #define SORT_QUICK_SORT_H 1
 //快速排序
 //quick sort
