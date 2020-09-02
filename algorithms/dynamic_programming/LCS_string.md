@@ -1,4 +1,4 @@
-## Longest Common Substring
+## Lintcode 79: Longest Common Substring
 
 Given two strings, find the longest common substring.
 Return the length of it.
@@ -8,7 +8,7 @@ Have you met this question in a real interview? Yes
 Example
 Given A = "ABCD", B = "CBCE", return 2.
 
-Challenge 
+Challenge
 O(n x m) time and memory.
 
 #### 分析
@@ -23,7 +23,7 @@ O(n x m) time and memory.
 
 ```cpp
 class Solution {
-public:    
+public:
     int longestCommonSubstring(string &A, string &B) {
         int maxLen = 0, maxIndex = 0;
         for (int i = 0; i < A.length(); ++i) {
@@ -37,7 +37,7 @@ public:
         }
         return maxLen;
     }
-    
+
     int comLen(string p, string q) {
         int len = 0;
         for (unsigned int i = 0; i < p.length() && i < q.length(); ++i) {
@@ -53,7 +53,7 @@ public:
 其实就是把解法 1 中，遍历的结果保存下来。
 
 Create a table to store lengths of longest common suffixes of substrings.
-Note that LCSuff[i][j] contains length of longest common suffix of X[0..i-1] and Y[0..j-1]. 
+Note that LCSuff[i][j] contains length of longest common suffix of X[0..i-1] and Y[0..j-1].
 The first row and first column entries have no logical meaning, they are used only for simplicity of program.
 
 ```cpp

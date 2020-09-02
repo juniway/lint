@@ -13,7 +13,7 @@ class NQueen {
 public:
     static int index;
 
-    void show(vector<int> queen){
+    void print(vector<int> queen){
         for(int i = 0; i < (int)queen.size(); i++){
             for (int j = 0; j < kN; ++j) {
                 if (j == queen[i]) {
@@ -30,11 +30,11 @@ public:
      // k 表示行，i 表示列
     void process(vector<int> queen, int k){ // queen[k] 表示在第 k 行放置一个皇后
         if(k == 8){ // 找到解了
-            show(queen);
+            print(queen);
             return;
         }
-        for(int i = 0; i < kN; i++){
-            if(!check(queen, k, i)) // 在第 k 行中，不断检测第 i 个元素是否可以放置。
+        for(int i = 0; i < col; i++){
+            if(!isValid(queen, k, i)) // 在第 k 行中，不断检测第 i 个元素是否可以放置。
                 continue;
             else {
                 queen[k] = i;  // 放置皇后 k
@@ -44,8 +44,7 @@ public:
         }
     }
 
-    // 新皇后放入的位置
-    bool check(vector<int> queen, int row, int col){
+    bool isValid(vector<int> queen, int row, int col){
         for(int i = 0; i < row; i++)
             if(queen[i] == col) return false; // 水平及垂直方向检测
         for(int i = 0; i < row; i++)
@@ -54,7 +53,7 @@ public:
     }
 
 private:
-    static const int kN = 8;
+    static const int col = 8;
 };
 
 int NQueen::index = 0;
